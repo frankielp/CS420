@@ -15,7 +15,7 @@ def scaleDownClass(label):
 
 def smallTestCase(file):
     classNum = randint(5,10)
-    size = randint(50,1000)
+    size = randint(10,40)
 
     sumW, minW = 0, 1
     weight = []
@@ -50,4 +50,4 @@ def smallTestCase(file):
         f.write(f"{item}, ")
     f.close()
 
-smallTestCase(os.path.dirname(os.path.dirname(__file__))+'\\data\\input\\input_010.txt')
+smallTestCase(os.path.dirname(os.path.dirname(__file__))+'\\data\\input\\input_004.txt')
