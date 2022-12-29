@@ -182,7 +182,7 @@ def generateHint9(map: list):
     print(chosenBoundary)
     return [8, chosenBoundary[0], chosenBoundary[1]]
 
-def verifyHint9(hint: list, map: list, treasurePos) -> bool:
+def verify_hint_9(hint: list, map: list, treasurePos) -> bool:
     x,y = treasurePos
 
     xp = [-1,0,1,0]
@@ -208,7 +208,7 @@ def isInside(x, y, m):
 def generateHint10():
     return [9]
 
-def verifyHint10(map: list, treasurePos) -> bool:
+def verify_hint_10(map: list, treasurePos) -> bool:
     xp = [-1, 0, 1, 0]
     yp = [0, 1, 0, -1]
 
@@ -226,7 +226,7 @@ def verifyHint10(map: list, treasurePos) -> bool:
 def generateHint11():
     return [10, random.randint(2,3)]
 
-def verifyHint11(hint: list, map: list, treasurePos):
+def verify_hint_11(hint: list, map: list, treasurePos):
     x,y = treasurePos
     dist = hint[1]
 
@@ -248,7 +248,7 @@ def verifyHint11(hint: list, map: list, treasurePos):
 def generateHint12():
     return [11, random.randint(1,4)]
 
-def verifyHint12(hint: list, mapSize, treasurePos):
+def verify_hint_12(hint: list, mapSize, treasurePos):
     x,y = treasurePos
 
     pos = hint[1]
@@ -270,7 +270,7 @@ def verifyHint12(hint: list, mapSize, treasurePos):
 def generateHint13():
     return [12, random.randint(1, 2), random.randint(1, 8)]
 
-def verifyHint13(hint: list, mapSize, prisonPos, treasurePos) -> bool:
+def verify_hint_13(hint: list, mapSize, prisonPos, treasurePos) -> bool:
     treasureX,treasureY = treasurePos
     pos, direction = hint[1], hint[2]
 
@@ -381,14 +381,14 @@ def generateHint14(mapSize: int):
     rightSmall = leftSmall+smallSize
     return [13, topBig, bottomBig, leftBig, rightBig, topSmall, bottomSmall, leftSmall, rightSmall]
 
-def verifyHint14(hint:list, treasurePos) -> bool:
+def verify_hint_14(hint:list, treasurePos) -> bool:
     x, y = treasurePos
 
     topBig, bottomBig, leftBig, rightBig = hint[1],hint[2], hint[3], hint[4]
     topSmall, bottomSmall, leftSmall, rightSmall = hint[5], hint[6], hint[7], hint[8]
     return ((topBig<=x<topSmall or bottomSmall<x<=bottomBig) and leftBig<=y<=rightBig) or (topBig<=x<=bottomBig and (leftBig<=y<=leftSmall))
 
-def verifyHint15(map: list, treasurePos) -> bool:
+def verify_hint_15(map: list, treasurePos) -> bool:
     x, y = treasurePos
     return map[x][y]=='M'
 
