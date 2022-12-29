@@ -1,4 +1,5 @@
 import random
+from config import *
 class MapGenerator:
     def __init__(self,size,num_of_region,num_of_prison,num_of_mountain):
         self.map=[]
@@ -137,7 +138,7 @@ class MapGenerator:
     def allocate_treasure(self):
         x=0
         y=0
-        while self.map[x][y]==0 or isinstance(self.map[x][y], str) :
+        while self.map[x][y]==0 or isinstance(self.map[x][y], str) or self.map[x][y][-1:]==MOUNTAIN:
             x=random.randint(0,self.size-1)
             y=random.randint(0,self.size-1)
         self.map[x][y]=str(self.map[x][y])+TREASURE

@@ -1,5 +1,5 @@
 import random
-def generateHint1():
+def generateHint1(map):
   hint = [0]
   num = random.randint(1,12)
 
@@ -77,7 +77,7 @@ def generateHint4(map):
 
 def verify_hint_4 (hint: list, treasurePos):
   x, y = treasurePos
-  # Hint 4: [3, top, bottom, left, right]: A large rectangle area that has the treasure. (< half: small; >= half: large)
+  # Hint 4: [3, top x, bottom x, left y, right y]: A large rectangle area that has the treasure. (< half: small; >= half: large)
   if x - hint[1] < 0:
     return False
   if hint[2] - x < 0:
@@ -254,13 +254,13 @@ def verify_hint_12(hint: list, mapSize, treasurePos):
     pos = hint[1]
 
     if (pos==1):
-        return y>=mapSize/2
+        return not y>=mapSize/2
     elif (pos==2):
-        return y<mapSize/2
+        return not y<mapSize/2
     elif (pos==3):
-        return x<mapSize/2
+        return not x<mapSize/2
     else:
-        return x>=mapSize/2
+        return not x>=mapSize/2
 
 # Hint 13: [12, 1: Center / 2: Prison, 1: N / 2: S / 3: W / 4: E / 5: SE / 6: SW / 7: NE / 8: NW]:
 # From the center of the map/from the prison that he's staying,
@@ -386,9 +386,9 @@ def verify_hint_14(hint:list, treasurePos) -> bool:
 
     topBig, bottomBig, leftBig, rightBig = hint[1],hint[2], hint[3], hint[4]
     topSmall, bottomSmall, leftSmall, rightSmall = hint[5], hint[6], hint[7], hint[8]
-    return ((topBig<=x<topSmall or bottomSmall<x<=bottomBig) and leftBig<=y<=rightBig) or (topBig<=x<=bottomBig and (leftBig<=y<=leftSmall))
+    return ((topBig<=x<=topSmall or bottomSmall<=x<=bottomBig) and leftBig<=y<=rightBig) or (topBig<=x<=bottomBig and (leftBig<=y<=leftSmall or rightSmall<=y<=rightBig) )
 
 def verify_hint_15(map: list, treasurePos) -> bool:
     x, y = treasurePos
-    return map[x][y]=='M'
+    return map[x][y][-1:]=='M'
 

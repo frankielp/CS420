@@ -22,3 +22,4 @@ map=''
 region=None
 log=''
 visualize(map,region,log)
+print(1<=2<=3)

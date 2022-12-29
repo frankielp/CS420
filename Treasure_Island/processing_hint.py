@@ -22,19 +22,16 @@ import numpy as np
   # 2 squares that are different in size, the small one is placed inside the bigger one, the treasure is somewhere inside the gap between 2 squares. (rare)
 # Hint 15: [14]: The treasure is in a region that has mountain.
 
-def generateHint(map, regions):
+def generateHint(index,map, regions):
   hint = []
-  mask=set() #tuple of no treasure tile
   logMsg = ""
-  # p = 0.045 for hints that are rare
-  index = np.random.choice(a=np.arange(0, 15, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, (1-0.07*12)/3, 0.07))
   # index = 3
-
+  index=index-1
   if index == 0:
 
     # Hint 1: [0, tuple (x, y - x: row, y: col)]: A list of random tiles that doesn't contain the treasure (1 to 12).
 
-    hint = generateHint1()
+    hint = generateHint1(map)
 
     logMsg = "These tile(s) do not contain the treasure: " + ', '.join(map(str, hint[1:]))
 
@@ -188,85 +185,3 @@ def generateHint(map, regions):
 
   return hint, logMsg
 
-def generateMask(game,hint):
-  w,h=len(game.map[0]),len(game.map)
-  mask=set()
-  if hint[0]==1:
-    if verify_hint_1 (hint, game.treasure_pos):
-      for i in range(1, len(hint)):
-        mask.add(hint[i])
-    else:
-      for i in range(h):
-        for j in range(w):
-          if (i,j) not in hint:
-            mask.add((i,j))
-  elif hint[0]==2:
-    if verify_hint_2 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==3:
-    if verify_hint_3 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==4:
-    if verify_hint_4 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==5:
-    if verify_hint_5 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==6:
-    if verify_hint_6 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==7:
-    if verify_hint_7 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==8:
-    if verify_hint_8 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==9:
-    if verify_hint_9 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==10:
-    if verify_hint_10 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==11:
-    if verify_hint_11 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==12:
-    if verify_hint_12 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==13:
-    if verify_hint_13 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==14:
-    if verify_hint_14 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
-  elif hint[0]==15:
-    if verify_hint_15 (hint, game.treasure_pos):
-      pass
-    else:
-      pass
