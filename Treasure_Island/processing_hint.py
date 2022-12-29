@@ -22,7 +22,7 @@ import numpy as np
   # 2 squares that are different in size, the small one is placed inside the bigger one, the treasure is somewhere inside the gap between 2 squares. (rare)
 # Hint 15: [14]: The treasure is in a region that has mountain.
 
-def generateHint(index,map, regions):
+def generateHint(index,Map, regions):
   hint = []
   logMsg = ""
   # index = 3
@@ -31,7 +31,7 @@ def generateHint(index,map, regions):
 
     # Hint 1: [0, tuple (x, y - x: row, y: col)]: A list of random tiles that doesn't contain the treasure (1 to 12).
 
-    hint = generateHint1(map)
+    hint = generateHint1(Map)
 
     logMsg = "These tile(s) do not contain the treasure: " + ', '.join(map(str, hint[1:]))
 
@@ -55,7 +55,7 @@ def generateHint(index,map, regions):
 
     # Hint 4: [3, top, bottom, left, right]: A large rectangle area that has the treasure. (< half: small; >= half: large)
 
-    hint = generateHint4(map)
+    hint = generateHint4(Map)
 
     logMsg = "This area contains the treasure: From row "+str(hint[1])+" to row "+str(hint[2])+", from column "+str(hint[3])+" to column "+str(hint[4])
       
@@ -63,7 +63,7 @@ def generateHint(index,map, regions):
 
     # Hint 5: [4, top, bottom, left, right]: A small rectangle area that doesn't has the treasure. (< half: small; >= half: large)
 
-    hint = generateHint5(map)
+    hint = generateHint5(Map)
 
     logMsg = "This area does not contain the treasure: From row "+str(hint[1])+" to row "+str(hint[2])+", from column "+str(hint[3])+" to column "+str(hint[4])
 
@@ -79,7 +79,7 @@ def generateHint(index,map, regions):
 
     # Hint 7: [6, 0: Row/ 1: Column, x]: A column and/or a row that contain the treasure (rare)
 
-    hint = generateHint7(map)
+    hint = generateHint7(Map)
 
     if (hint[1] == 0): logMsg = "Row "
     else: logMsg = "Column "
@@ -90,7 +90,7 @@ def generateHint(index,map, regions):
 
     # Hint 8: [7, 0: Row/ 1: Column, x]: A column and/or a row that do not contain the treasure.
 
-    hint = generateHint8(len(map))
+    hint = generateHint8(len(Map))
 
     if (hint[1] == 0): logMsg = "Row "
     else: logMsg = "Column "
@@ -101,7 +101,7 @@ def generateHint(index,map, regions):
 
     # Hint 9: [8, x, y]: 2 regions that the treasure is somewhere in their boundary
 
-    hint = generateHint9(map)
+    hint = generateHint9(Map)
 
     logMsg += "Treasure is somewhere in these two regions' boudaries: Region " + str(hint[1]) + " and region " + str([hint[2]])
 

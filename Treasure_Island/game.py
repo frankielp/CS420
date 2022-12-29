@@ -53,7 +53,8 @@ class Game():
             print('--------------------------------------')
             print(f'TURN {self.turn}')
             self.get_hint()
-            action_choice=random.randint(0,len(self.action_list)-1)
+            # action_choice=random.randint(0,len(self.action_list)-1)
+            action_choice=0
             log=self.action(action_choice)
             self.map.visualize()
             print(log)
