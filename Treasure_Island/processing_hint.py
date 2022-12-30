@@ -103,7 +103,7 @@ def generateHint(index,Map, regions):
 
     hint = generateHint9(Map)
 
-    logMsg += "Treasure is somewhere in these two regions' boudaries: Region " + str(hint[1]) + " and region " + str([hint[2]])
+    logMsg += "Treasure is somewhere in these two regions' boudaries: Region " + str(hint[1]) + " and region " + str(hint[2])
 
   elif index == 9:
 
@@ -147,10 +147,11 @@ def generateHint(index,Map, regions):
 
     hint = generateHint13()
 
-    direction, starting_point
+    direction =""
+    starting_point =""
 
     if hint[1] == 1: starting_point = "center of the map"
-    else: starting_point = "Prison"
+    else: starting_point = "prison where the pirate's staying"
 
     if hint[2] == 1: direction = "North"
     elif hint[2] == 2: direction = "South"
@@ -161,23 +162,24 @@ def generateHint(index,Map, regions):
     elif hint[2] == 7: direction = "North East"
     else: direction = "North West"
 
-    logMsg += "From the "+starting_point+" that pirate's staying, the treasure is in the " + direction+ " direction"
+    logMsg += "From the "+starting_point+", the treasure is in the " + direction+ " direction"
 
   elif index == 13:
 
     # Hint 14: [13, top_big, bottom_big, left_big, right_big, top_small, bottom_small, left_small, right_small]: 
       # 2 squares that are different in size, the small one is placed inside the bigger one, the treasure is somewhere inside the gap between 2 squares. (rare)
 
-    hint = generateHint14()
+    hint = generateHint14(mapSize=len(Map))
 
     logMsg = "the treasure is somewhere inside the gap between 2 squares:\n\t"
-    logMsg += "The bigger square bounded by row "+hint[1]+" on top; row " +hint[2]+" at the bottom; "
-    logMsg += "column "+hint[3]+" on the left and column "+hint[4]+ " on the right\n\t"
-    logMsg += "The smaller square bounded by row "+hint[5]+" on top; row " +hint[6]+" at the bottom; "
-    logMsg += "column "+hint[7]+" on the left and column "+hint[8]+ " on the right\n\t"
+    logMsg += "The bigger square bounded by row "+str(hint[1])+" on top; row " +str(hint[2])+" at the bottom; "
+    logMsg += "column "+str(hint[3])+" on the left and column "+str(hint[4])+ " on the right\n\t"
+    logMsg += "The smaller square bounded by row "+str(hint[5])+" on top; row " +str(hint[6])+" at the bottom; "
+    logMsg += "column "+str(hint[7])+" on the left and column "+str(hint[8])+ " on the right\n\t"
 
   elif index == 14:
     # Hint 15: [14]: The treasure is in a region that has mountain.
+    hint = [14]
     logMsg = "The treasure is in a region that has mountain."
 
   else:

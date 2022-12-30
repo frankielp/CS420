@@ -351,7 +351,7 @@ class Map():
                 veri_flag=True
                 for x in range(h):
                     for y in range(w):
-                        if not (((topBig<=x<=topSmall or bottomSmall<=x<=bottomBig) and leftBig<=y<=rightBig) or (topBig<=x<=bottomBig and (leftBig<=y<=leftSmall or rightSmall<=y<=rightBig))):
+                        if not (((topBig<=x<topSmall or bottomSmall<x<=bottomBig) and leftBig<=y<=rightBig) or (topBig<=x<=bottomBig and (leftBig<=y<leftSmall or rightSmall<y<=rightBig))):
                             mask.add((x,y))
             else:
                 veri_flag=False
@@ -363,7 +363,7 @@ class Map():
             '''
             The treasure is in regions that has mountain
             '''
-            if verify_hint_15 (hint, self.treasure_pos):
+            if verify_hint_15 (map=self.board, treasurePos=self.treasure_pos):
                 veri_flag=True
                 for x in range(h):
                     for y in range(w):
@@ -375,7 +375,7 @@ class Map():
                 veri_flag=False
                 for x in range(h):
                     for y in range(w):
-                        type=str(self.board[x][y][-1:])
+                        type=str(str(self.board[x][y])[-1:])
                         if type==MOUNTAIN:
                             mask.add((x,y))
         return veri_flag,mask

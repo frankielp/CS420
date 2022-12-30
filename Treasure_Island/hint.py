@@ -159,6 +159,7 @@ def verify_hint_8 (hint: list, treasurePos):
   return True
 
 # Hint 9: [8, x, y]: 2 regions that the treasure is somewhere in their boundary
+
 def generateHint9(map: list):
     boundary = set()
     m = len(map)
@@ -166,20 +167,30 @@ def generateHint9(map: list):
     xp = [-1,0,1,0]
     yp = [0,1,0,-1]
 
+    def getRegion(region):
+      s = str(region)
+      for i in reversed(range(0, len(s))):
+        if "0" <= s[i] <= "9":
+          return int(s[0:i+1])
+
     def isInside(x: int, y: int, m: int) -> bool:
         return (0<=x<m and 0<=y<m)
 
     for x in range(m):
         for y in range(m):
-            if (map[x][y]==0): continue
-            for i in range(4):
-                xt,yt = x+xp[i], y+yp[i]
-                if (isInside(xt,yt,m) and map[xt][yt]!=0 and map[xt][yt]!=map[x][y]):
-                    boundary.add((min(map[x][y], map[xt][yt]),max(map[x][y],map[xt][yt])))
-
-    chosenBoundary = random.sample(list(boundary), 1)[0]
-    print(boundary)
-    print(chosenBoundary)
+          if map[x][y] == "XX": continue
+          region1 = getRegion(map[x][y])
+          if (region1==0): continue
+          for i in range(4):
+              xt,yt = x+xp[i], y+yp[i]
+              if not isInside(xt, yt, m) or map[xt][yt] == "XX": continue
+              region2 = getRegion(map[xt][yt])
+              # print(region1, region2)
+              if (region2!=0 and region2!=region1):
+                boundary.add((min(region1, region2),max(region1,region2)))
+    chosenBoundary = random.choice(list(boundary))
+    # print(boundary)
+    # print(chosenBoundary)
     return [8, chosenBoundary[0], chosenBoundary[1]]
 
 def verify_hint_9(hint: list, map: list, treasurePos) -> bool:
@@ -226,7 +237,7 @@ def verify_hint_10(map: list, treasurePos) -> bool:
 def generateHint11():
     return [10, random.randint(2,3)]
 
-def verify_hint_11(hint: list, map: list, treasurePos):
+def verifyHint11(hint: list, map: list, treasurePos):
     x,y = treasurePos
     dist = hint[1]
 
@@ -237,8 +248,9 @@ def verify_hint_11(hint: list, map: list, treasurePos):
         return (0<=x<m and 0<=y<m)
 
     for i in range(4):
-        xt = x+xp[i]*dist
-        yt = y+yp[i]*dist
+      for d in range(1, dist):
+        xt = x+xp[i]*d
+        yt = y+yp[i]*d
         if (isInside(xt,yt,len(map)) and map[xt][yt]==0):
             return True
 
@@ -386,9 +398,11 @@ def verify_hint_14(hint:list, treasurePos) -> bool:
 
     topBig, bottomBig, leftBig, rightBig = hint[1],hint[2], hint[3], hint[4]
     topSmall, bottomSmall, leftSmall, rightSmall = hint[5], hint[6], hint[7], hint[8]
-    return ((topBig<=x<=topSmall or bottomSmall<=x<=bottomBig) and leftBig<=y<=rightBig) or (topBig<=x<=bottomBig and (leftBig<=y<=leftSmall or rightSmall<=y<=rightBig) )
+    return ((topBig<=x<topSmall or bottomSmall<x<=bottomBig) and leftBig<=y<=rightBig) or (topBig<=x<=bottomBig and (leftBig<=y<leftSmall or rightSmall<y<=rightBig) )
 
 def verify_hint_15(map: list, treasurePos) -> bool:
     x, y = treasurePos
-    return map[x][y][-1:]=='M'
+    if len(map[x][y])>=2:
+      return map[x][y][-1:] =='M'
+    else: return False
 
