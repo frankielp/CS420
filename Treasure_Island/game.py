@@ -246,6 +246,7 @@ class Game():
             print()
             print('LOG\n'+log)
             input('Press Enter to continue')
+        print('GAME RESULT:',self.result)
 
         
 
