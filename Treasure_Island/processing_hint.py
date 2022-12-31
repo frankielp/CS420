@@ -25,7 +25,7 @@ import numpy as np
 def generateHint(index,Map, regions):
   hint = []
   logMsg = ""
-  # index = 3
+  # index = 4
   index=index-1
   if index == 0:
 

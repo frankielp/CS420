@@ -95,7 +95,7 @@ def generateHint5(map):
 
   # print([no_treasure_row, no_treasure_col])
 
-  area = random.randint(0,int(len(map) / 4) -1)
+  area = random.randint(int(len(map) / 8),int(len(map) / 6))
   # print(np.arange(0, area_expand, 1, dtype=int))
   # print(area)
   left = no_treasure_col - area
