@@ -187,3 +187,4 @@ def generateHint(index,Map, regions):
 
   return hint, logMsg
 
+  

@@ -1,4 +1,5 @@
 import random
+from config import *
 def generateHint1(map):
   hint = [0]
   num = random.randint(1,12)
@@ -178,12 +179,12 @@ def generateHint9(map: list):
 
     for x in range(m):
         for y in range(m):
-          if map[x][y] == "XX": continue
+          if map[x][y]==MASKED or map[x][y]==MASKED+AGENT: continue
           region1 = getRegion(map[x][y])
           if (region1==0): continue
           for i in range(4):
               xt,yt = x+xp[i], y+yp[i]
-              if not isInside(xt, yt, m) or map[xt][yt] == "XX": continue
+              if not isInside(xt, yt, m) or  map[xt][yt]==MASKED or map[xt][yt]==MASKED+AGENT: continue
               region2 = getRegion(map[xt][yt])
               # print(region1, region2)
               if (region2!=0 and region2!=region1):
@@ -237,7 +238,7 @@ def verify_hint_10(map: list, treasurePos) -> bool:
 def generateHint11():
     return [10, random.randint(2,3)]
 
-def verifyHint11(hint: list, map: list, treasurePos):
+def verify_hint_11(hint: list, map: list, treasurePos):
     x,y = treasurePos
     dist = hint[1]
 

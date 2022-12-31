@@ -40,6 +40,8 @@ class Map():
             y=random.randint(0,self.w-1)
         self.board[x][y]=str(self.board[x][y])+AGENT
         self.agent_pos=(x,y)
+        log=f'Agent is allocated at ({x},{y})\n'
+        return log
     def init_pirate(self):
         prison_pos=[]
         for i in range(self.h):
@@ -56,7 +58,7 @@ class Map():
     def visualize(self):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
-                print('{:>3}'.format(self.board[i][j]),end=' ')
+                print('{:>3}'.format(self.board[i][j]),end='')
             print()
     def generate_mask(self,hint):
         w,h=self.w,self.h
