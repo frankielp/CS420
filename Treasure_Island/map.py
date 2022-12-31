@@ -56,9 +56,14 @@ class Map():
             self.board[x][y]=MASKED
         return veri_flag
     def visualize(self):
+        print('{:>4}'.format(''),end='')
         for i in range(len(self.board)):
+            print('{:>4}'.format(i),end='')
+        print()
+        for i in range(len(self.board)):
+            print('{:>4}'.format(i),end='')
             for j in range(len(self.board[i])):
-                print('{:>3}'.format(self.board[i][j]),end='')
+                print('{:>4}'.format(self.board[i][j]),end='')
             print()
     def generate_mask(self,hint):
         w,h=self.w,self.h

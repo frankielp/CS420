@@ -97,11 +97,12 @@ class Game():
         for i in range(x-size//2,x+size//2+1):
             for j in range(y-size//2,y+size//2+1):
                 if i==tx and j==ty:
+                    self.map.board[i][j]=MASKED+TREASURE
                     self.result='WIN'
                     log+=f'Found Treasure at x={i} y={j}\n'
                     continue
                 try:
-                    if AGENT in self.map.board[i][j]:
+                    if isinstance(self.map.board[i][j],str) and AGENT in self.map.board[i][j]:
                         self.map.board[i][j]=MASKED+AGENT
                     else:
                         self.map.board[i][j]=MASKED
