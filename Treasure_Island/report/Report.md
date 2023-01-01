@@ -57,80 +57,115 @@ CLASS Map:
 		allocate_mountain()
 		allocate_prison()
 		allocate_treasure()
-		
-	function create_ocean()
-		FOR i from 0 to size
-			FOR j from 0 to size:
-				IF i OR j is the edge of map
-					position at (i, j) becomes OCEAN
-					expand the OCEAN from position (i, j) with certain probability
-					move to adjacent positions of (i, j)
-					IF (i_new, j_new) is OCEAN
-						expand the OCEAN from that position with certain probability
-					END IF
+```
+
+##### Create Ocean
+
+###### Description
+
+Tiles that are on the edge of map will be assigned to be an OCEAN. Then with certain probability, each ocean tile will be randomly chosen and expanded the OCEAN to adjacent positions.
+
+For maps that are big in size, the OCEAN will be expanded once more time but with lower probability so that the map will not be filled with too many OCEAN tiles.
+
+###### Pseudo Code
+
+```
+function create_ocean()
+	FOR i from 0 to size
+		FOR j from 0 to size:
+			IF i OR j is the edge of map
+				position at (i, j) becomes OCEAN
+				expand the OCEAN from position (i, j) with certain probability
+				move to adjacent positions of (i, j)
+				IF (i_new, j_new) is OCEAN
+					expand the OCEAN from that position with lower certain probability
 				END IF
-			END FOR
-		END FOR
-		
-	function expand_prob(i, j, prob)
-		value_1 <- value at ith row, jth column in map
-		expand <- randomly choose between 0 and 1 with probability = prob
-		IF expand = 1
-			move to adjacent positions of (i, j) except diagonally positions
-			IF new position has not assign a region
-				new position is an OCEAN
 			END IF
+		END FOR
+	END FOR
+	
+function expand_prob(i, j, prob)
+	value_1 <- value at ith row, jth column in map
+	expand <- randomly choose between 0 and 1 with probability = prob
+	IF expand = 1
+		move to adjacent positions of (i, j) except diagonally positions
+		IF new position has not assign a region
+			new position is an OCEAN
 		END IF
-		
-	function divide_region()
-		regeion_ration <- list
-		calculate the probability for each region
-		total <- total number of tiles in map excluding OCEAN region
-		region_tile <- dict
-		for each region, append the number of tiles which is that region to region_tile
-		IF sum of those tiles does not equal the total tiles in map
-			add the lacking number to tiles to the last region so that they are equal
-		END IF
-		
-	funtion expand_tile (i, j, region, tile):
-		queue <- [[i, j]]
-		WHILE tile > 0 and queue is not empty:
-			get a location by popping the first element in queue
-			assign that location to become region
-			decrease tile
-			expand the location to all directions and repeat the process
+	END IF
+```
+
+##### Create Region
+
+###### Description
+
+First we divide the region, which means we assign how many tiles for each region. Then for each region, we repeat the process:
+1. Pick a location on map that has not been assigned to a region.
+2. Assign that location with region.
+3. From that location, recursively expand to adjacent tiles until the number of tiles in that region is reached.
+
+###### Pseudo Code
+
+```	
+function divide_region()
+	region_ration <- list
+	calculate the probability for each region
+	total <- total number of tiles in map excluding OCEAN region
+	for each region, calculate the number of tiles which is that region
+	IF sum of those tiles in each region does not equal the total tiles in map
+		add the lacking number of tiles to the last region
+	END IF
+	
+funtion expand_tile (location, tile):
+	queue <- [location]
+	WHILE tile > 0 and queue is not empty:
+		get a location by popping the first element in queue
+		assign that location to become region
+		decrease tile
+		expand the location to all directions and repeat the process
+	END WHILE
+	
+function create_region
+	region_tile <- divide_region()
+	FOR region in region_tile:
+		tile <- total number of tiles in that region
+		FOR each location in map that has not been assigned to a region:
+			expand_tile(location, tile)
+		END FOR
+	END FOR
+	final check if all the tiles is assigned a region yet
+	if not assign them with the last region in region_tile
+```
+
+##### Allocating Necessary Objects
+
+###### Description
+
+We simply allocate mountains, treasure and prisons by randomly selecting tiles on the map.
+
+###### Pseudo Code
+
+```
+function allocate_mountain
+	mountain_length <- size / num_of_mountain
+	FOR i from 0 to num_of_mountain:
+		randomly pick a location until it is not OCEAN
+		assign the location has mountain
+		WHILE mountain_length > 0
+			expand to an adjacent location and assign it has mountain
+			decrease mountain_length
 		END WHILE
-		
-	function create_region
-		region_tile <- divide_region()
-		FOR region in region_tile:
-			FOR each location in map:
-				expand_tile()
-			END FOR
-		END FOR
-		final check if all the tiles is assigned a region yet
-		if not assign them with the last region in region_tile
-		
-	function allocate_mountain
-		mountain_length <- size / num_of_mountain
-		FOR i from 0 to num_of_mountain:
-			randomly pick a location until it is not OCEAN
-			assign the location has mountain
-			WHILE mountain_length > 0
-				expand to an adjacent location and assign it has mountain
-				decrease mountain_length
-			END WHILE
-		END FOR
-		
-	function allocate_treasure
+	END FOR
+	
+function allocate_treasure
+	randomly choose a location until it is not OCEAN
+	assign the location has treasure
+	
+function allocate_prison
+	FOR i from 0 to num_of_prison
 		randomly choose a location until it is not OCEAN
-		assign the location has treasure
-		
-	function allocate_prison
-		FOR i from 0 to num_of_prison
-			randomly choose a location until it is not OCEAN
-			assign the location is a prison
-		END FOR
+		assign the location is a prison
+	END FOR
 ```
 
 #### Hint
@@ -806,8 +841,8 @@ The agent is capable of executing five actions: "verification", "move large", "s
 - Large scan: Scan in horizontal and vertical direction with the total length of 5
 - Small move: Move 3 or 4 steps
 - Large move: Move 1 or 2 steps only
-- Verification
-- Teleport: 
+- Verification: Verify whether a hint is accurate or not.
+- Teleport: Teleport the agent to another tiles
 
 ##### Scan
 
@@ -882,7 +917,36 @@ def agent_move:
 ###### Pseudo Code
 
 ```
-def teleport_agent
+def teleport_agent(pirate_direction)
+	agent_position <- pirate_position
+	ax, ay <- agent_position
+	step <- 4
+	FOR i from 0 to length of pirate_direction - 1:
+		IF i equals the last number in range:
+			tmp_step <- step
+		END IF
+		ELSE
+			tmp_step = step // 2
+		END ELSE
+		move the agent `tmp_step` toward the ith direction
+		decrease step by tmp_step
+	END FOR
+	update the agent's position
+```
+
+##### Verification
+
+###### Description
+
+Get the first hint among hints that agent has received. Then, depend on what hint it is, the corresponding verify_hint function will be called and return the result.
+
+###### Pseudo Code
+
+```
+def verification
+	pop the first stored hint
+	call the corresponding verify_hint function
+	print result to LOG
 ```
 
 ### Visualization 
