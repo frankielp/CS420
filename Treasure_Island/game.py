@@ -270,12 +270,12 @@ class Game():
 
         
 
-   
-cwd = os.getcwd()  # Get the current working directory (cwd)
-files = os.listdir(cwd)  # Get all the files in that directory
-print("Files in %r: %s" % (cwd, files))      
-t=Game()
-t.input('Treasure_Island/input/MAP32.txt')
-t.play()
-if not t.result is None:
-    t.export()
+if __name__=='__main__':
+    cwd = os.getcwd()  # Get the current working directory (cwd)
+    files = os.listdir(cwd)  # Get all the files in that directory
+    print("Files in %r: %s" % (cwd, files))      
+    t=Game()
+    t.input('Treasure_Island/input/MAP32.txt')
+    t.play()
+    if not t.result is None:
+        t.export()
