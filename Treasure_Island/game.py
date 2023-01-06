@@ -27,10 +27,13 @@ class Game():
             self.release_turn=int(f.readline().replace('\n',''))
     def get_hint(self):
         # p = 0.045 for hints that are rare
-        choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, (1-0.07*12)/3, 0.07))
+        if self.turn==1:
+            choice=self.get_first_hint()
+        else:
+            choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, (1-0.07*12)/3, 0.07))
         self.hint.append(choice)
     def action(self,choice,direction=None):
-        action_log='ACTION: '+self.action_list[choice].upper()+'\n'
+        action_log='\nACTION: '+self.action_list[choice].upper()+'\n'
         if self.action_list[choice]=='verification':
             hint_choice=self.hint.pop(0)
             hint,log=generateHint(hint_choice,self.map.board,self.map.region)
@@ -186,7 +189,10 @@ class Game():
             elif direction[i]=='W':
                 ay-=tmp_step
             step-=tmp_step
-        
+        # Correction
+        ax=min(max(0,ax),self.map.w-1)
+        ay=min(max(0,ay),self.map.h-1)
+
         self.map.agent_pos=(ax,ay)
         self.map.board[ax][ay]=str(self.map.board[ax][ay])+AGENT
     def teleport_agent(self,direction):

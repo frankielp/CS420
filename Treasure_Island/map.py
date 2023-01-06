@@ -53,7 +53,10 @@ class Map():
     def masking(self,hint):
         veri_flag,mask=self.generate_mask(hint)
         for x,y in mask:
-            self.board[x][y]=MASKED
+            if isinstance(self.board[x][y],str) and AGENT in self.board[x][y]:
+                self.board[x][y]=MASKED+AGENT
+            else:
+                self.board[x][y]=MASKED
         return veri_flag
     def visualize(self):
         print('{:>4}'.format(''),end='')
@@ -338,15 +341,74 @@ class Map():
                 pass
         elif hint[0]+1==13:
             '''
+        Hint 13: [12, 1: Center / 2: Prison, 1: N / 2: S / 3: W / 4: E / 5: SE / 6: SW / 7: NE / 8: NW]:
+        From the center of the map/from the prison that he's staying,
+        he tells you a direction that has the treasure (W, E, N, S or SE, SW, NE, NW)
+        (The shape of area when the hints are either W, E, N or S is triangle).
             '''
             size=self.w
-            pos, direction = hint[1], hint[2]
+            pos_choice, direction = hint[1], hint[2]
+            tmp_mask=set()
+            if pos_choice==1:
+                    x,y=self.h//2,self.w//2
+            elif pos_choice==2:
+                x,y=self.pirate_pos
+            if direction==1: #N
+                row=x #current row
+                while row>=0:
+                    padding=abs(x-row)
+                    for j in range(y-padding,y+padding+1):
+                        if j<0 or j>=self.w: continue
+                        tmp_mask.add((row,j))
+                    row-=1
+            elif direction==2: #S
+                row=x #current row
+                while row<self.h:
+                    padding=abs(x-row)
+                    for j in range(y-padding,y+padding+1):
+                        if j<0 or j>=self.w: continue
+                        tmp_mask.add((row,j))
+                    row+=1
+            elif direction==3: #W
+                col=y #current col
+                while col>=0:
+                    padding=abs(y-col)
+                    for i in range(x-padding,x+padding+1):
+                        if i<0 or i>=self.h: continue
+                        tmp_mask.add((i,col))
+                    col-=1
+            elif direction==4: #E
+                col=y #current col
+                while col<self.w:
+                    padding=abs(y-col)
+                    for i in range(x-padding,x+padding+1):
+                        if i<0 or i>=self.h: continue
+                        tmp_mask.add((i,col))
+                    col+=1
+            elif direction==5: #SE
+                for i in range(x,self.h):
+                    for j in range(y,self.w):
+                        tmp_mask.add((i,j))
+            elif direction==6: #SW
+                for i in range(x,self.h):
+                    for j in range(0,y+1):
+                        tmp_mask.add((i,j))
+            elif direction==7: #NE
+                for i in range(0,x):
+                    for j in range(y,self.w):
+                        tmp_mask.add((i,j))
+            elif direction==8: #NW
+                for i in range(0,x+1):
+                    for j in range(0,y+1):
+                        tmp_mask.add((i,j))
             if verify_hint_13 (hint, size,self.pirate_pos,self.treasure_pos):
-                veri_flag=True
-                pass
+                for i in range(self.h):
+                    for j in range(self.w):
+                        if (i,j) not in tmp_mask:
+                            mask.add((i,j))
             else:
-                veri_flag=False
-                pass
+                mask=tmp_mask         
+
         elif hint[0]+1==14:
             '''
             Hint 14: [13, top_big, bottom_big, left_big, right_big, top_small, bottom_small, left_small, right_small]: 
