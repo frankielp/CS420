@@ -135,11 +135,14 @@ class Map():
                         if region not in hint[1:]:
                             mask.add((i,j))
         elif hint[0]+1==4:
+            '''
+            Hint 4: [3, top x, bottom x, left y, right y]: A large rectangle area that has the treasure. (< half: small; >= half: large)
+            '''
             if verify_hint_4 (hint, self.treasure_pos):
                 veri_flag=True
                 for i in range(h):
                     for j in range(w):
-                        if i<hint[1] or i>hint[2] or j<hint[3] or j>hint[4]:
+                        if not(hint[1]<=i<=hint[2] and hint[3]<=j<=hint[4]):
                             mask.add((i,j))
             else:
                 veri_flag=False
@@ -161,7 +164,7 @@ class Map():
                 veri_flag=False
                 for i in range(h):
                     for j in range(w):
-                        if i<hint[1] or i>hint[2] or j<hint[3] or j>hint[4]:
+                        if not(hint[1]<=i<=hint[2] and hint[3]<=j<=hint[4]):
                             mask.add((i,j))
         elif hint[0]+1==6:
             '''
@@ -353,7 +356,22 @@ class Map():
                                 mask.add((i,j))
             else:
                 veri_flag=False
-                pass
+                if (pos==2):
+                    for i in range(h):
+                        for j in range(size//2,w):
+                                mask.add((i,j))
+                elif (pos==1):
+                    for i in range(h):
+                        for j in range(0,size//2):
+                                mask.add((i,j))
+                elif (pos==4):
+                    for i in range(0,size//2):
+                        for j in range(w):
+                                mask.add((i,j))
+                else:
+                    for i in range(size//2,h):
+                        for j in range(w):
+                                mask.add((i,j))
         elif hint[0]+1==13:
             '''
         Hint 13: [12, 1: Center / 2: Prison, 1: N / 2: S / 3: W / 4: E / 5: SE / 6: SW / 7: NE / 8: NW]:

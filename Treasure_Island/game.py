@@ -36,13 +36,18 @@ class Game():
             choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, (1-0.07*12)/3, 0.07))
         else:
             choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0, (1-0.07*12)/3+0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3+0.07, 0, (1-0.07*12)/3, 0.07))
-                
-        self.hint.append(choice)
+        
+        # debug
+        choice=4
+
+        hint,log=generateHint(choice,self.map.board,self.map.region)
+        self.hint.append([hint,log])
+        log='Pirate give hint: '+log+'\nAdd hint to hint list\n'
+        return log
     def action(self,choice,direction=None):
         action_log='\nACTION: '+self.action_list[choice].upper()+'\n'
         if self.action_list[choice]=='verification':
-            hint_choice=self.hint.pop(0)
-            hint,log=generateHint(hint_choice,self.map.board,self.map.region)
+            hint,log=self.hint.pop(0)     
             veri_flag=self.map.masking(hint)
             action_log+='HINT: '+log+'\n'
             action_log+='Verification: '+str(veri_flag)+'\n'
@@ -62,6 +67,8 @@ class Game():
         return action_log
     def free_pirate(self):
         self.pirate=True
+        px,py=self.map.pirate_pos
+        self.map.board[px][py]+=PIRATE
     def pirate_move(self):
         direction=''
         px,py=self.map.pirate_pos
@@ -234,8 +241,12 @@ class Game():
 
     def choose_action(self):
         # self.action_list=['verification','move_scan_small','move_large','scan_large']
-
-        action_choice_1=random.randint(0,len(self.action_list)-1)
+        # no scan if agent on MASKED and move large
+        ax,ay=self.map.agent_pos
+        if isinstance(self.map.board[ax][ay],str) and MASKED in self.map.board[ax][ay]:
+            action_choice_1=2
+        else:
+            action_choice_1=random.randint(0,len(self.action_list)-1)
         while True:
             action_choice_2=random.randint(0,len(self.action_list)-1)
             # no move_scan_small -> scan large
@@ -266,7 +277,7 @@ class Game():
                 self.free_pirate()
             if self.turn==1:
                 log+=self.get_first_hint()
-            self.get_hint()
+            log+=self.get_hint()
 
             # Choose action
             action_choice_1,action_choice_2=self.choose_action()
@@ -292,6 +303,10 @@ class Game():
             self.log+=log
             if self.view:
                 input('Press Enter to continue')
+        if self.result=='LOSE':
+            log='Pirate found the treasure.\n'
+            self.log+=log
+            print(log)
         print('GAME RESULT:',self.result)
 
     def export(self):
