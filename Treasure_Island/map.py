@@ -1,3 +1,4 @@
+from termcolor import colored,cprint
 from generate_map import *
 from processing_hint import *
 from hint import *
@@ -66,12 +67,26 @@ class Map():
         for i in range(len(self.board)):
             print('{:>4}'.format(i),end='')
             for j in range(len(self.board[i])):
-                print('{:>4}'.format(self.board[i][j]),end='')
+                if isinstance(self.board[i][j],str):
+                    if AGENT in self.board[i][j]:
+                        color=COLOR['AGENT']
+                    elif MASKED in self.board[i][j]:
+                        color=COLOR['MASKED']
+                    elif TREASURE in self.board[i][j]:
+                        color=COLOR['TREASURE']
+                    elif PIRATE in self.board[i][j]:
+                        color=COLOR['PIRATE']
+                elif self.board[i][j]==OCEAN:
+                    color=COLOR['OCEAN']
+                else:
+                    region=int(str(self.board[i][j])[:1])
+                    color=COLOR['REGION'][region%len(COLOR['REGION'])]
+                text = colored('{:>4}'.format(self.board[i][j]), color, attrs=["reverse", "blink"])
+                print(text,end='')
             print()
     def generate_mask(self,hint):
         w,h=self.w,self.h
         mask=set()
-        
         if hint[0]+1==1:
             if verify_hint_1 (hint, self.treasure_pos):
                 veri_flag=True

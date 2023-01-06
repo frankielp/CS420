@@ -119,7 +119,7 @@ class Game():
         flag=False
         while True:
             for i in range(16):
-                hint,log=generateHint(i,self.map.board,self.map.region)
+                hint,log=generateHint(i+1,self.map.board,self.map.region)
                 if hint[0]+1==1:
                     flag=verify_hint_1(hint,self.map.treasure_pos)
                 elif hint[0]+1==2:
@@ -152,7 +152,7 @@ class Game():
                     flag=verify_hint_14(hint,self.map.treasure_pos)
                 elif hint[0]+1==15:
                     flag=verify_hint_15(self.map.board,self.map.treasure_pos)
-                if flag: return i
+                if flag: return i+1
             
     def agent_move(self,choice,pi_direction=None):
         ax,ay=self.map.agent_pos
@@ -262,5 +262,5 @@ cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
 print("Files in %r: %s" % (cwd, files))      
 t=Game()
-t.input('Treasure_Island/input/MAP02.txt')
+t.input('map32.txt')
 t.play()

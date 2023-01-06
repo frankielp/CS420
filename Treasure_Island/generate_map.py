@@ -1,5 +1,6 @@
 import random
 from config import *
+import os
 class MapGenerator:
     def __init__(self,size,num_of_region,num_of_prison,num_of_mountain):
         self.map=[]
@@ -138,7 +139,7 @@ class MapGenerator:
     def allocate_treasure(self):
         x=0
         y=0
-        while self.map[x][y]==0 or isinstance(self.map[x][y], str) or self.map[x][y][-1:]==MOUNTAIN:
+        while self.map[x][y]==0 or (isinstance(self.map[x][y], str) and self.map[x][y][-1:]==MOUNTAIN):
             x=random.randint(0,self.size-1)
             y=random.randint(0,self.size-1)
         self.map[x][y]=str(self.map[x][y])+TREASURE
@@ -169,3 +170,15 @@ class MapGenerator:
                         f.write('{:>2}\n'.format(self.map[i][j]))
                     else:
                         f.write('{:>2};'.format(self.map[i][j]))
+
+if __name__=='__main__':
+    size=int(input('Size of map: '))
+    region=int(input('Number of region: '))
+    prison=int(input('Number of prison: '))
+    mountain=int(input('Number of mountain: '))
+    filename=input('Output filename: ')
+    map=MapGenerator(size=size,num_of_region=region,num_of_mountain=mountain,num_of_prison=prison)
+    map.visualize()
+    cwd = os.getcwd()
+    map.export(filename)
+    print('Map exported to ',str(cwd)+'/'+filename)
