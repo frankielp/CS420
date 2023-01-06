@@ -70,12 +70,12 @@ class Map():
                 if isinstance(self.board[i][j],str):
                     if AGENT in self.board[i][j]:
                         color=COLOR['AGENT']
-                    elif MASKED in self.board[i][j]:
-                        color=COLOR['MASKED']
                     elif TREASURE in self.board[i][j]:
                         color=COLOR['TREASURE']
                     elif PIRATE in self.board[i][j]:
                         color=COLOR['PIRATE']
+                    elif MASKED in self.board[i][j]:
+                        color=COLOR['MASKED']
                 elif self.board[i][j]==OCEAN:
                     color=COLOR['OCEAN']
                 else:
@@ -244,7 +244,7 @@ class Map():
             def is_boundary_2(i,j,region1,region2):
                 if isinstance(self.board[i][j],str) and self.board[i][j][0]=='X': return False
                 region=int(str(self.board[i][j])[:1])
-                if region!=region1 and region!=region2: return False
+                if region!=region1 or region!=region2: return False
                 x=[-1,0,1,0]
                 y = [0,1,0,-1]
                 for t in range(4):

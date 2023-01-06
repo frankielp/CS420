@@ -31,10 +31,12 @@ class Game():
             self.release_turn=int(f.readline().replace('\n',''))
     def get_hint(self):
         # p = 0.045 for hints that are rare
-        if self.turn==1:
-            choice=self.get_first_hint()
-        else:
+        # hint 6 and hint 13 prison shouldnt be <reveal and >=release
+        if self.turn>=self.reveal_prison_turn and self.turn<self.release_turn:
             choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, (1-0.07*12)/3, 0.07))
+        else:
+            choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0, (1-0.07*12)/3+0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3+0.07, 0, (1-0.07*12)/3, 0.07))
+                
         self.hint.append(choice)
     def action(self,choice,direction=None):
         action_log='\nACTION: '+self.action_list[choice].upper()+'\n'
@@ -156,7 +158,13 @@ class Game():
                     flag=verify_hint_14(hint,self.map.treasure_pos)
                 elif hint[0]+1==15:
                     flag=verify_hint_15(self.map.board,self.map.treasure_pos)
-                if flag: return i+1
+                if flag: 
+                    break
+            veri_flag=self.map.masking(hint)
+            action_log='First hint is always true\n'
+            action_log+='HINT: '+log+'\n'
+            action_log+='Verification: '+str(veri_flag)+'\n'
+            return action_log
             
     def agent_move(self,choice,pi_direction=None):
         ax,ay=self.map.agent_pos
@@ -200,9 +208,9 @@ class Game():
         self.map.agent_pos=(ax,ay)
         self.map.board[ax][ay]=str(self.map.board[ax][ay])+AGENT
     def teleport_agent(self,direction):
-        self.map.agent_pos=self.map.pirate_pos
         ax,ay=self.map.agent_pos
         self.map.board[ax][ay]=str(self.map.board[ax][ay]).replace(AGENT,'')
+        ax,ay=self.map.pirate_pos   
         step=4
         for i in range(len(direction)):
             if i==len(direction)-1:
@@ -223,26 +231,47 @@ class Game():
         self.map.board[ax][ay]=str(self.map.board[ax][ay])+AGENT
         log=f'Agent teleports to x={ax} y={ay}\n'
         return log
+
+    def choose_action(self):
+        # self.action_list=['verification','move_scan_small','move_large','scan_large']
+
+        action_choice_1=random.randint(0,len(self.action_list)-1)
+        while True:
+            action_choice_2=random.randint(0,len(self.action_list)-1)
+            # no move_scan_small -> scan large
+            if action_choice_2!=action_choice_1 and (action_choice_1!=1 or action_choice_1!=3): break
+
+        return action_choice_1,action_choice_2
+
     def play(self):
         log=self.map.init_agent()
+        log+=f'The pirate’s prison is going to reveal the at the beginning of {self.reveal_prison_turn} turn\n'
+        log+=f'The pirate is free at the beginning of the {self.release_turn}th turn\n'
+        self.log+='START GAME\n'+log
         print('START GAME\n'+log,end='')
         while self.result is None:
-            log=''
             self.turn+=1
+            log=f'TURN {self.turn}\n'
             print('--------------------------------------')
             print(f'TURN {self.turn}')
+
+            # Reveal prison
             if self.turn==self.reveal_prison_turn:
                 px,py=self.map.pirate_pos
                 log+=f'The prison of pirate locate at x={px},y={py}\n'
+
+            # Release
             if self.turn==self.release_turn:
                 log+='Pirate has been released\n'
                 self.free_pirate()
+            if self.turn==1:
+                log+=self.get_first_hint()
             self.get_hint()
-            action_choice_1=random.randint(0,len(self.action_list)-1)
-            # action_choice=1
-            while True:
-                action_choice_2=random.randint(0,len(self.action_list)-1)
-                if action_choice_2!=action_choice_1: break
+
+            # Choose action
+            action_choice_1,action_choice_2=self.choose_action()
+
+            # Conduct action
             if self.pirate:
                 direction=self.pirate_move()
                 if not self.teleport:
@@ -253,7 +282,11 @@ class Game():
             else:
                 log+=self.action(action_choice_1)
                 log+=self.action(action_choice_2)
+
+            # Visualization
             self.map.visualize()
+
+            # Print Log
             print()
             print('LOG\n'+log)
             self.log+=log
