@@ -7,6 +7,7 @@ import os
 
 class Game():
     def __init__(self):
+        self.testcase=None
         self.map=Map()
         self.reveal_prison_turn=None
         self.release_turn=None
@@ -18,8 +19,11 @@ class Game():
         self.turn=0
         self.small_scan=3
         self.large_scan=5
+        self.log=''
+        self.view=False
 
     def input(self,filename):
+        self.testcase=int(filename[-6:-4])
         self.map.input(filename)
         with open(filename) as f:
             f.readline()
@@ -252,8 +256,17 @@ class Game():
             self.map.visualize()
             print()
             print('LOG\n'+log)
-            input('Press Enter to continue')
+            self.log+=log
+            if self.view:
+                input('Press Enter to continue')
         print('GAME RESULT:',self.result)
+
+    def export(self):
+        outfile=f'LOG{self.testcase}.txt'
+        with open ('Treasure_Island/output/'+outfile,'w+') as f:
+            f.write(str(len(self.log.split('\n')))+'\n')
+            f.write(self.result.upper()+'\n')
+            f.write(self.log)
 
         
 
@@ -262,5 +275,7 @@ cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
 print("Files in %r: %s" % (cwd, files))      
 t=Game()
-t.input('map32.txt')
+t.input('Treasure_Island/input/MAP32.txt')
 t.play()
+if not t.result is None:
+    t.export()

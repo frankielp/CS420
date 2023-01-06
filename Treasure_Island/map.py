@@ -417,11 +417,13 @@ class Map():
                     for j in range(0,y+1):
                         tmp_mask.add((i,j))
             if verify_hint_13 (hint, size,self.pirate_pos,self.treasure_pos):
+                veri_flag=True
                 for i in range(self.h):
                     for j in range(self.w):
                         if (i,j) not in tmp_mask:
                             mask.add((i,j))
             else:
+                veri_flag=False
                 mask=tmp_mask         
 
         elif hint[0]+1==14:

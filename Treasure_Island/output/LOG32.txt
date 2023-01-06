@@ -1,0 +1,183 @@
+182
+WIN
+
+ACTION: VERIFICATION
+HINT: These tile(s) do not contain the treasure: (19, 22), (15, 24), (11, 16), (31, 23), (15, 10), (16, 7), (19, 29), (15, 31), (15, 5), (30, 15), (17, 18)
+Verification: True
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=12 y=6
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=13 y=7
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=15 y=9
+The prison of pirate locate at x=9,y=7
+
+ACTION: VERIFICATION
+HINT: These tile(s) do not contain the treasure: (6, 10), (14, 16), (3, 18), (30, 18)
+Verification: True
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=17 y=10
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=16 y=12
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=16 y=12
+Conduct small scan
+Found nothing
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=16 y=12
+
+ACTION: VERIFICATION
+HINT: These region(s) do not contain the treasure: 5, 1
+Verification: True
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=17 y=12
+Conduct small scan
+Found nothing
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=18 y=12
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=19 y=12
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: VERIFICATION
+HINT: This area contains the treasure: From row 0 to row 31, from column 0 to column 31
+Verification: True
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=17 y=14
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=16 y=13
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=17 y=13
+Conduct small scan
+Found nothing
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: VERIFICATION
+HINT: The treasure is somewhere in a boundary of 2 regions
+Verification: False
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=18 y=13
+
+ACTION: VERIFICATION
+HINT: A half top of the map does not have treasure
+Verification: True
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=17 y=12
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=18 y=12
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=17 y=10
+Pirate has been released
+Agent teleports to x=12 y=10
+
+ACTION: VERIFICATION
+HINT: These region(s) do not contain the treasure: 0, 4
+Verification: True
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=12 y=11
+Conduct small scan
+Found nothing
+
+ACTION: VERIFICATION
+HINT: This area contains the treasure: From row 0 to row 31, from column 0 to column 27
+Verification: True
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=13 y=12
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=15 y=14
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=16 y=15
+Conduct small scan
+Found nothing
+
+ACTION: VERIFICATION
+HINT: The treasure is in a region that has mountain.
+Verification: False
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=18 y=17
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=18 y=18
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=18 y=19
+Conduct small scan
+Found Treasure at x=18 y=20
+
+ACTION: VERIFICATION
+HINT: You are the nearest person to the treasure (between you and the prison the pirate is staying)
+Verification: True
