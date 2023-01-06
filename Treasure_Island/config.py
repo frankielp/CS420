@@ -6,15 +6,17 @@ MASKED='XX'
 AGENT='A'
 PIRATE='PI'
 
-COLOR={'OCEAN':'blue',
+COLOR={'OCEAN':'white',
 'TREASURE':'yellow',	
 'MASKED':'white',
-'AGENT':'green',
-'PIRATE':'black',
+'AGENT':'red',
+'PIRATE':'red',
 'REGION':[
-'red',	
+'green',	
 'magenta',
-'cyan'
+'cyan',
+'blue',
+'grey'
 # 'light_grey',	
 # 'dark_grey',
 # 'light_red',	
