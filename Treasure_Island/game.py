@@ -199,15 +199,20 @@ class Game():
                     if j<ay: direction_count['W']+=1
                     elif i>ay: direction_count['E']+=1
         direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True) 
-        print(direction_count)
         direction=str(direction_count[random.choice([0,0,0,0,0,0,0,0,1,1])]) #80/20
         if self.pirate:
-            direction=str(pi_direction[random.choice([0,0,0,0,0,0,0,0,1,1])])
+            if len(pi_direction)>1:
+                direction=str(pi_direction[random.choice([0,0,0,0,0,0,0,0,1,1])])
+            else:
+                direction=str(pi_direction[0])
         #     common=''
         #     for w in direction:
         #         if w in pi_direction:
         #             common+=w 
         # else:
+        # for reset 
+        tx,ty=ax,ay
+
         if direction=='N':
             ax-=step
         elif direction=='S':
@@ -219,7 +224,6 @@ class Game():
         num_step=step
         # mountain
         # reset
-        tx,ty=ax,ay
         tstep=step
         while True:
             step=1
@@ -238,14 +242,7 @@ class Game():
                     break
             except:
                 ax,ay=tx,ty
-                if direction=='N':
-                    direction='S'
-                elif direction=='S':
-                    direction='N'
-                elif direction=='E':
-                    direction='W'
-                elif direction=='W':
-                    direction='E'
+                direction=random.choice(['N','E','W','S'])
                 num_step=tstep
                     
         # Correction
@@ -261,6 +258,8 @@ class Game():
         self.map.board[ax][ay]=str(self.map.board[ax][ay]).replace(AGENT,'')
         ax,ay=self.map.pirate_pos   
         step=2
+         # for reset 
+        tx,ty=ax,ay
         for i in range(len(direction)):
             if i==len(direction)-1:
                 tmp_step=step
@@ -275,8 +274,7 @@ class Game():
             elif direction[i]=='W':
                 ay-=tmp_step
             step-=tmp_step
-        # reset
-        tx,ty=ax,ay
+        
         while True:
             step=1
             try:
@@ -293,14 +291,7 @@ class Game():
                     break
             except:
                 ax,ay=tx,ty
-                if direction=='N':
-                    direction='S'
-                elif direction=='S':
-                    direction='N'
-                elif direction=='E':
-                    direction='W'
-                elif direction=='W':
-                    direction='E'
+                direction=random.choice(['N','E','W','S'])
                     
         # Correction
         ax=min(max(0,ax),self.map.w-1)
@@ -379,12 +370,13 @@ class Game():
                 if self.result is None:
                     log+=self.action(action_choice_2)
 
-            # Visualization
-            self.map.visualize()
+            
 
             self.log+=log
             # Print Log
             if self.visualize:
+                # Visualization
+                self.map.visualize()
                 print()
                 print('LOG\n'+log)
                 input('Press Enter to continue')

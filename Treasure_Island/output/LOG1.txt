@@ -1,45 +1,22 @@
-43
+20
 WIN
 START GAME
-Agent is allocated at (3,5)
+Agent is allocated at (9,13)
 The pirate’s prison is going to reveal the at the beginning of 3 turn
 The pirate is free at the beginning of the 9th turn
 
 TURN 1
 First hint is always true
-HINT: These region(s) do not contain the treasure: 0
+HINT: Treasure is in one of these region(s): 4, 3, 2
 Verification: True
-
-ACTION: MOVE_SCAN_SMALL
-Agent move 3 steps in direction S
-Agent moves straight small steps into x=6 y=5
-Conduct small scan
-Found nothing
-
-ACTION: MOVE_LARGE
-Agent move 4 steps in direction S
-Agent moves straight large steps into x=10 y=5
-
-TURN 2
-Pirate give hint: These region(s) do not contain the treasure: 1
-Add hint to hint list
 
 ACTION: SCAN_LARGE
 Conduct large scan
 Found nothing
 
-ACTION: VERIFICATION
-HINT: These region(s) do not contain the treasure: 1
-Verification: True
-
-TURN 3
-The prison of pirate locate at x=5,y=11
-Pirate give hint: These region(s) do not contain the treasure: 0, 4
-Add hint to hint list
-
 ACTION: MOVE_SCAN_SMALL
-Agent move 3 steps in direction E
-Agent moves straight small steps into x=10 y=8
+Agent move 3 steps in direction W
+Agent moves straight small steps into x=9 y=10
 Conduct small scan
 Found Treasure at x=10 y=9
 GAME RESULT:WIN
