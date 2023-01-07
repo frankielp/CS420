@@ -874,6 +874,8 @@ def scan(size):
 
 First, random the step agent has to move. If the pirate has been released, the agent simply follow the pirate since the pirate's path to treasure is implemented as the shortest path.
 
+// bu gium phan nay nha nq t hong biet giai thich logic agent sao, thank you
+
 ###### Pseudo Code
 
 ```
@@ -913,6 +915,8 @@ def agent_move:
 ##### Teleport
 
 ###### Description
+
+// bu gium phan nay nha nq t hong biet giai thich logic agent sao, thank you
 
 ###### Pseudo Code
 
@@ -979,6 +983,8 @@ Action LOG for each test case is recorded in the corresponding text file stored 
 The game run successfully in all 5 test cases.
 
 ### Evaluation
+
+The agent is not guaranteed to win the game or find out the optimal strategy to defeat the pirate.
 
 ### Comments
 
