@@ -494,7 +494,7 @@ class Map():
                 veri_flag=True
                 for x in range(h):
                     for y in range(w):
-                        type=str(self.board[x][y][-1:])
+                        type=str(str(self.board[x][y])[-1:])
                         if type!=MOUNTAIN:
                             mask.add((x,y))
 

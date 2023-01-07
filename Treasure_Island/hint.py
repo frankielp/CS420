@@ -204,14 +204,23 @@ def verify_hint_9(hint: list, map: list, treasurePos) -> bool:
     yp = [0,1,0,-1]
 
     area1 = hint[1]
-    area2 = hint[2]
+    area2 = hint[2]   
+
+    def getRegion(region):
+      if isinstance(region,str):
+        s = str(region[0])
+      else:
+        s=str(region)
+      for i in reversed(range(0, len(s))):
+        if "0" <= s[i] <= "9":
+          return int(s[0:i+1])
 
     def isInside(x,y,m) -> bool:
         return (0<=x<m and 0<=y<m)
 
     for i in range(4):
         xt,yt = x+xp[i], y+yp[i]
-        if (isInside(xt,yt,len(map)) and ((map[xt][yt]==area1 and map[x][y]==area2) or (map[xt][yt]==area2 and map[x][y]==area1))):
+        if (isInside(xt,yt,len(map)) and ((getRegion(map[xt][yt])==area1 and getRegion(map[x][y])==area2) or (getRegion(map[xt][yt])==area2 and getRegion(map[x][y])==area1))):
             return True
 
     return False
@@ -417,7 +426,8 @@ def verify_hint_14(hint:list, treasurePos) -> bool:
 
 def verify_hint_15(map: list, treasurePos) -> bool:
     x, y = treasurePos
-    if len(map[x][y])>=2:
-      return map[x][y][-1:] =='M'
-    else: return False
+    for c in map[x][y]:
+      if (c=='M'):
+        return True
+    return False
 

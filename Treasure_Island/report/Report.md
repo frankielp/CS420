@@ -23,13 +23,31 @@
 | 3   | Implement the logical agent                                                            | Complete   |
 | 4   | Implement the visualization tools                                                      | Complete   |
 | 5   | The agent can handle a complex map with large size, many of regions, prison, mountains | Complete   |
-| 6   | Report your implementation with some reflection or comments                            | Incomplete | 
+| 6   | Report your implementation with some reflection or comments                            | Complete | 
 | 7   | Contest                                                                                | Complete   |
+
+### Usage
+
+To run the game, first you need to go to `Treasure_Island` folder; 
+
+```{cmd}
+cd .\Treasure_Island\
+```
+The main function is placed in `game.py` and it has to be provided with three arguments: the input folder, the output folder and the visualization flag
+
+For example, by running the following command:
+
+```
+game.py input\ output\ False
+```
+
+Meaning that `main` function in game.py is executed, the input text files are stored in folder `input`, similarly for the output text files that record game's LOG.
+
+Visualization flag is used to indicate whether you want the game to automatically run on itself or not. If you set the visualization flag to `True`, you have to press enter in order to go to the next step.
 
 ### Implementation
 
 #### Maps generator
-
 
 ##### Algorithm's description
 
@@ -62,112 +80,22 @@ CLASS Map:
 
 ##### Create Ocean
 
-###### Description
-
 Tiles that are on the edge of map will be assigned to be an OCEAN. Then with certain probability, each ocean tile will be randomly chosen and expanded the OCEAN to adjacent positions.
 
 For maps that are big in size, the OCEAN will be expanded once more time but with lower probability so that the map will not be filled with too many OCEAN tiles.
 
-###### Pseudo Code
-
-```
-function create_ocean()
-	FOR i from 0 to size
-		FOR j from 0 to size:
-			IF i OR j is the edge of map
-				position at (i, j) becomes OCEAN
-				expand the OCEAN from position (i, j) with certain probability
-				move to adjacent positions of (i, j)
-				IF (i_new, j_new) is OCEAN
-					expand the OCEAN from that position with lower certain probability
-				END IF
-			END IF
-		END FOR
-	END FOR
-	
-function expand_prob(i, j, prob)
-	value_1 <- value at ith row, jth column in map
-	expand <- randomly choose between 0 and 1 with probability = prob
-	IF expand = 1
-		move to adjacent positions of (i, j) except diagonally positions
-		IF new position has not assign a region
-			new position is an OCEAN
-		END IF
-	END IF
-```
-
 ##### Create Region
-
-###### Description
 
 First we divide the region, which means we assign how many tiles for each region. Then for each region, we repeat the process:
 1. Pick a location on map that has not been assigned to a region.
 2. Assign that location with region.
 3. From that location, recursively expand to adjacent tiles until the number of tiles in that region is reached.
 
-###### Pseudo Code
-
-```	
-function divide_region()
-	region_ration <- list
-	calculate the probability for each region
-	total <- total number of tiles in map excluding OCEAN region
-	for each region, calculate the number of tiles which is that region
-	IF sum of those tiles in each region does not equal the total tiles in map
-		add the lacking number of tiles to the last region
-	END IF
-	
-funtion expand_tile (location, tile):
-	queue <- [location]
-	WHILE tile > 0 and queue is not empty:
-		get a location by popping the first element in queue
-		assign that location to become region
-		decrease tile
-		expand the location to all directions and repeat the process
-	END WHILE
-	
-function create_region
-	region_tile <- divide_region()
-	FOR region in region_tile:
-		tile <- total number of tiles in that region
-		FOR each location in map that has not been assigned to a region:
-			expand_tile(location, tile)
-		END FOR
-	END FOR
-	final check if all the tiles is assigned a region yet
-	if not assign them with the last region in region_tile
-```
-
 ##### Allocating Necessary Objects
 
 ###### Description
 
 We simply allocate mountains, treasure and prisons by randomly selecting tiles on the map.
-
-###### Pseudo Code
-
-```
-function allocate_mountain
-	mountain_length <- size / num_of_mountain
-	FOR i from 0 to num_of_mountain:
-		randomly pick a location until it is not OCEAN
-		assign the location has mountain
-		WHILE mountain_length > 0
-			expand to an adjacent location and assign it has mountain
-			decrease mountain_length
-		END WHILE
-	END FOR
-	
-function allocate_treasure
-	randomly choose a location until it is not OCEAN
-	assign the location has treasure
-	
-function allocate_prison
-	FOR i from 0 to num_of_prison
-		randomly choose a location until it is not OCEAN
-		assign the location is a prison
-	END FOR
-```
 
 #### Hint
 
@@ -177,339 +105,113 @@ In each turn, the program call *generateHint()* function to randomly generate on
 
 ##### Hint 01: A list of random tiles that doesn't contain the treasure (1 to 12)
 
-###### Explanation:
-
 - **Generate Hint**: For a random number of tiles, we will randomly choose 1 coordinate on the map
 - **Verify Hint**: Traverse through the list of random tiles, if one of those contain treasure, return false indicating that this hint is inaccurate; else, we return true
 
-###### Pseudo Code:
+**Illustration:**
 
-```{python}
-function GENERATE_HINT:
-	tiles <- list()
-	FOR i from 1 to (random 1 to 12):
-		row <- random a row index
-		col <- random a col index
-		add (row, col) to tiles
-	END FOR
-	return tiles
+![](2023-01-07-18-49-46.png)
 
-function VERIFY_HINT(tiles):
-	FOR i from 1 to tiles' length:
-		if the position (row, col) contain treasure
-			return false
-	END FOR
-	return true
-```
+> These tile(s) do not contain the treasure: (2, 6), (9, 4), (8, 11), (5, 14)
+
+![](2023-01-07-18-51-10.png)
 
 ##### Hint 02: 2-5 regions that 1 of them has the treasure.
-
-###### Explanation
 
 **Generate Hint:** For a random number from 2 to 5, we randomly choose a region from a list of defined regions
 **Verify Hint:** If none of the regions contain treasure, the hint is inaccurate
 
-###### Pseudo Code
+**Illustration:**
 
-```
-function GENERATE_HINT:
-	chosen_regions <- list()
-	FOR i from 1 to (random 2 to 5):
-		randomly choose a region
-		add that region to chosen_regions
-	END FOR
-	return chosen_regions
+![](2023-01-07-18-52-41.png)
 
-function VERIFY_HINT(chosen_regions):
-	FOR i from 1 to chosen_regions' length:
-		if the region of index i in chosen_regions contain treasure
-			return true
-	END FOR
-	return false
-```
+> Treasure is in one of these region(s): 4, 2, 3
+
+![](2023-01-07-18-53-10.png)
 
 ##### Hint 03: 1-3 regions that do not contain the treasure.
-
-###### Explanation
 
 **Generate Hint:** For a random number from 1 to 3, we randomly choose a region from a list of defined regions
 **Verify Hint:** If one of the regions contain treasure, the hint is inaccurate
 
-###### Pseudo Code
+**Illustration:**
 
-```
-function GENERATE_HINT:
-	chosen_regions <- list()
-	FOR i from 1 to (random 1 to 3):
-		randomly choose a region
-		IF that region is already in chosen_regions
-			decrese i
-			continue
-		ENDIF
-		add that region to chosen_regions
-	END FOR
-	return chosen_regions
+![](2023-01-07-18-53-44.png)
 
-function VERIFY_HINT(chosen_regions):
-	FOR i from 1 to chosen_regions' length:
-		if the region of index i in chosen_regions contain treasure
-			return false
-	END FOR
-	return true
-```
+> These region(s) do not contain the treasure: 1, 4
+
+![](2023-01-07-18-54-22.png)
 
 ##### Hint 04: A large rectangle area that has the treasure. 
-
-###### Explanation
 
 **Generate Hint:** Randomly choose a tile on map. From that tile, expand in all 4 directions a number of rows and columns. That number is chosen by randomly generate and it must be large enough. We consider a number that is greater that half of the map's size is a large number.
 **Verify Hint:** If all of the tiles in the generated region do not contain treasure, then the hint is inaccurate
 
-###### Pseudo Code
+**Illustration:**
 
-```
-function GENERATE_HINT (map):
-	expanded_area <- randomly choose a number from half the length of map to the length of map
-	random_tile <- randomly choose a tile on map
-	
-	move left side of random_tile a number of expanded_area leftward
-	IF it gets out of the map:
-		assign 0
-	ENDIF
-	
-	move right side of random_tile a number of expanded_area rightward
-	IF right side gets out of the map:
-		assign length of map
-	ENDIF
-	
-	move the top of random_tile a number of expanded_area topward
-	IF it gets out of the map:
-		assign 0
-	ENDIF
-	
-	move the bottom of random_tile a number of expanded_area bottomward
-	IF it gets out of the map:
-		assign length of map
-	ENDIF
-	return the area bounded by the random_tile after expanded
+![](2023-01-07-18-54-55.png)
 
-function VERIFY_HINT():
-	IF treasure's row index smaller than left size of expanded area or
-		treasure's row index bigger than right size of expanded area or
-		treasure's column index smaller than the top index of expanded area or
-		treasure's column index bigger than the bottom idex of expanded area:
-			return false
-	END IF
-	return true
-```
+> This area contains the treasure: From row 0 to row 13, from column 0 to column 15
+
+![](2023-01-07-18-55-24.png)
 
 ##### Hint 05: A small rectangle area that doesn't has the treasure. 
-
-###### Explanation
 
 **Generate Hint:** Randomly choose a tile on map. From that tile, expand in all 4 directions a number of rows and columns. That number is chosen by randomly generate and it must be small enough. We consider a number that is smaller that a quarter of the map's size is a small number.
 **Verify Hint:** If one of the tiles in the generated region contains treasure, then the hint is inaccurate
 
-###### Pseudo Code
+**Illustration:**
 
-```
-function GENERATE_HINT (map):
-	expanded_area <- randomly choose a number from half the length of map to the length of map
-	random_tile <- randomly choose a tile on map
-	
-	move left side of random_tile a number of expanded_area leftward
-	IF it gets out of the map:
-		assign 0
-	ENDIF
-	
-	move right side of random_tile a number of expanded_area rightward
-	IF right side gets out of the map:
-		assign length of map
-	ENDIF
-	
-	move the top of random_tile a number of expanded_area topward
-	IF it gets out of the map:
-		assign 0
-	ENDIF
-	
-	move the bottom of random_tile a number of expanded_area bottomward
-	IF it gets out of the map:
-		assign length of map
-	ENDIF
-	return the area bounded by the random_tile after expanded
+![](2023-01-07-18-56-02.png)
 
-function VERIFY_HINT():
-	IF treasure's row index bigger than left size of expanded area and
-		treasure's row index smaller than right size of expanded area and
-		treasure's column index bigger than the top index of expanded area and
-		treasure's column index smaller than the bottom idex of expanded area:
-			return false
-	END IF
-	return true
-```
+> This area does not contain the treasure: From row 3 to row 7, from column 6 to column 10
+
+![](2023-01-07-18-56-32.png)
 
 ##### Hint 06: He tells you that you are the nearest person to the treasure (between you and the prison he is staying). 
-
-###### Explanation
 
 **Generate Hint:** Do nothing, we just return a number that indicates this is hint 6
 **Verify Hint:** Comparing the distance of agent and pirate to the treasure by calculating the smallest number of tiles they have to move to get to the treasure. If the pirate is nearer to the treasure, the hint is inaccurate.
 
-###### Pseudo Code
+**Illustration:**
 
-```
-function GENERATE_HINT ():
-	return
+![](2023-01-07-18-57-10.png)
 
-function VERIFY_HINT(treasure_position, agent_position, prison_position):
-	agent_distance_from_treasure <- sum of column distance and row distance between agent and treasure
-	prison_distance_from_treasure <- sum of column distance and row distance between prison and treasure
-	IF agent_distance_from_treasure is greater than prison_distance_from_treasure:
-		return false
-	END IF
-	return true
-```
+> You are the nearest person to the treasure (between you and the prison the pirate is staying)
+
+In this game, the prison of pirate locate at x=5,y=11. In this hint, we calculate the Euclidean distance to mask the map
+
+![](2023-01-07-19-03-02.png)
 
 ##### Hint 07: A column and/or a row that contain the treasure (rare). 
-
-###### Explanation
 
 **Generate Hint:** Choose randomly a row index or column index
 **Verify Hint:** If that row / column does not contain treasure, then this hint is inaccurate
 
-###### Pseudo Code
-
-```
-function GENERATE_HINT ():
-	randomly choose between 0 (row) or 1 (column) to hint
-	return a random row / column
-
-function VERIFY_HINT(treasure_position):
-	IF the hint announces about a row:
-		if the row in treasure_position does not equal to the hint's index:
-			return false
-	ENDIF
-	IF the hint announces about a column:
-		if the column in treasure_position does not equal to the hint's index:
-			return false
-	END IF
-	return true
-```
+**Illustration**
 
 ##### Hint 08: A column and/or a row that do not contain the treasure. 
-
-###### Explanation
 
 **Generate Hint:** Choose randomly a row index or column index
 **Verify Hint:** If that row / column contains treasure, then this hint is inaccurate
 
-###### Pseudo Code
-
-```
-function GENERATE_HINT ():
-	randomly choose between 0 (row) or 1 (column) to hint
-	return a random row / column
-
-function VERIFY_HINT(treasure_position):
-	IF the hint announces about a row:
-		if the row in treasure_position equals to the hint's index:
-			return false
-	ENDIF
-	IF the hint announces about a column:
-		if the column in treasure_position equals to the hint's index:
-			return false
-	END IF
-	return true
-```
-
 ##### Hint 09: 2 regions that the treasure is somewhere in their boundary.
-
-###### Explanation
 
 **Generate Hint:** First, we store all the the regions, which is not sea, that have the same boundary. Then we randomly choose one in the list.
 **Verify Hint:** Since we know the position of treasure, we simply check the region of treasure is one of region in the hint and at least one of the next tile of treasure is in the other region.
 
-###### Pseudo Code
-
-```
-function GENERATE_HINT(map)
-	boundary is a set
-	m = map.size
-	for each tile in map:
-		if current title is not sea:
-			for each next tile is next to current tile:
-				r1 <- region of current tile
-				r2 <- region of next tile
-				if r2 is not sea and r1 != r2:
-					add (r1,r2) to boundary
-	hintBoundary <- randomly choose from boundary
-	return hintBoundary
-  
- function VERIFY_HINT(hint, map, treasurePos):
-	 region1 <- hint[1]
-	 region2 <- hint[2]
-	 treasureRegion <- region of treasurePos
-	 for each nextTile is next to treasurePos:
-		 nextRegion <- region of nextTile
-			 if ((treasureRegion == region1 and nextRegion == region2) or
-			 (treasureRegion == region2 and nextRegion == region1)):
-				 return True
-	return False
-```
-
 ##### Hint 10: The treasure is somewhere in a boundary of 2 regions. 
-
-###### Explanation
 
 **Generate Hint:** Do nothing, we just return a number that indicates this is hint 10
 **Verify Hint:** Since we know the position of treasure, we check if the region the treasure in is different at least one of the region of the next tile.
 
-###### Pseudo Code
-
-```
-function GENERATE_HINT ():
-	return
-
-function VERIFY_HINT(map, treasurePos):
-	region1 <- region of treasurePos
-	for each nextTile is next to treasurePos:
-		region2 <- region of nextTile
-		if (region2 is not sea and region1!=region2):
-			return True
-	return False
-```
 
 ##### Hint 11: The treasure is somewhere in an area bounded by 2-3 tiles from sea. 
-
-###### Explanation
 
 **Generate Hint:** We randomly choose 2 or 3, as the number of tiles from sea.
 **Verify Hint:** Since we know the position of treasure, we simply check the shortest distance from the treasure to the sea is smaller or equal to the given hint
 
-###### Pseudo Code
-
-```
-function GENERATE_HINT ():
-	randomly choose between 2 and 3
-
-function VERIFY_HINT(hint, map, treasurePos):
-	x,y <- treasurePos
-	dist <- hint[1]
-	xp <- [-1,0,1,0]
-	yp <- [0,1,0,-1]
-	for i=0 to 4:
-		for d=1 to dist:
-			xt <- x+xp[i]*d
-			yt <- x+yp[i]*d
-			region <- the region at xt, yt
-			if (region is the sea):
-				return True
-	return False
-```
-
 ##### Hint 12: A half of the map without treasure (rare). 
-
-###### Explanation
 
 **Generate Hint:**
 
@@ -527,36 +229,7 @@ Since we know the position of the treasure, let $x$, $y$ be the tre
 3. If $x \ge \frac m 2$, clearly the treasure is in the top half and not in the bottom half of the map.
 4. If $x < \frac m 2$, the treasure is in the bottom half and not in the top half of the map.
 
-###### Pseudo Code
-
-```
-function GENERATE_HINT ():
-	randomly choose among 4 numbers from 1 to 4
-
-function VERIFY_HINT(hint, mapSize, treasurePos):
-	x,y <- treasurePos
-	pos <- hint[1]
-	if (pos is right half):
-		if (y < int(mapSize/2)):
-			return True
-		return False
-	else if (pos is left half):
-		if (y >= int(mapSize/2)):
-			return True
-		return False
-	else if (pos is bottom half):
-		if (x >= int(mapSize/2)):
-			return True
-		return False
-	else:
-		if (x < int(mapSize/2)):
-			return True
-		return False
-```
-
 ##### Hint 13: From the center of the map/from the prison that he's staying, he tells you a direction that has the treasure (W, E, N, S or SE, SW, NE, NW) (The shape of area when the hints are either W, E, N or S is triangle). 
-
-###### Explanation
 
 **Generate Hint:** 
 
@@ -598,82 +271,7 @@ Since we know the position of the treasure, let `treasureX`, `treasure
   7. If the given direction is **North East**, it must satisfy `prisonX` $<$ `treasureX` and `prisonY` $\leq$ `treasureY`.
   8. If the given direction is **North West**, it must satisfy `prisonX` $<$ `treasureX` and `prisonY` $<$ ``treasureY``.
 
-###### Pseudo Code
-
-```
-function GENERATE_HINT ():
-	randomly choose between 1 and 2
-	randomly choose among 8 numbers from 1 to 8
-
-function VERIFY_HINT(hint, mapSize, prisonPos, treasurePos):
-	treasureX, treasureY <- treasurePos
-	pos <- hint[1],
-	direction <- hint[2]
-	if (pos is from the center of the map):
-		half <- mapSize/2
-		if (direction is North)
-			if (treasureX >= half):
-				return False
-			dist <- half-treasureX
-			return half-dist <= treasureY <= half+dist-1
-		else if (direction is south):
-			if (treasureX < half):
-				return False
-			dist <- treasureX-half
-			return half-dist <= treasureY <= half+dist-1
-		else if (direction is west):
-			if (treasureY>=half):
-				return False
-			dist = half-treasureY
-			return half-dist <= treasureX <= half+dist-1
-		else if (direction is east):
-			if (treasureY<half):
-				return False
-			dist = treasureY-half
-			return half-dist <= treasureX <= half+dist-1
-		else if (direction is south east):
-			return (half <=treasureX and half <=treasureY)
-		else if (direction is south west):
-			return (half <= treasureX and treasureY < half)
-		else if (direction is north east):
-			return (treasureX < half and half <= treasureY)
-		else:
-			return (treasureX < half and treasureY < half)
-	else:
-		prisonX, prisonY = prisonPos
-		if (direction is north):
-			if (treasureX >= prisonX):
-				return False
-			dist = prisonX-treasureX
-			return prisonY-dist <= treasureY <= prisonY+dist
-		else if (direction is south):
-			if (treasureX<prisonX):
-				return False
-			dist = treasureX-prisonX
-			return prisonY-dist <= treasureY <= prisonY+dist
-		else if (direction is west):
-			if (treasureY>=prisonY):
-				return False
-			dist = prisonY-treasureY
-			return prisonX-dist <= treasureX <= prisonX+dist
-		else if (direction is east):
-			if (treasureY<prisonY):
-				return False
-			dist = treasureY-prisonY
-			return prisonX-dist <= treasureX <= prisonX+dist
-		else if (direction is south east):
-			return (prisonX <= treasureX and prisonY <= treasureY)
-		else if (direction is south west):
-			return (prisonX <= treasureX and treasureY < prisonY)
-		else if (direction is north east):
-			return (treasureX<prisonX and prisonY <= treasureY)
-		else:
-			return (treasureX<prisonX and treasureY<prisonY)
-```
-
 ##### Hint 14: 2 squares that are different in size, the small one is placed inside the bigger one, the treasure is somewhere inside the gap between 2 squares. (rare) 
-
-###### Explanation
 
 **Generate Hint:** 
 
@@ -693,49 +291,10 @@ There are 2 main cases:
 1. If `topBig` $\leq$ x $<$ `topSmall` or `bottomSmall` $<$ x $\leq$ `bottomBig`, then it must satisfy `leftBig` $\leq$ y $\leq$ `rightBig`.
 2. If `leftBig` $\leq$ y $<$ `leftSmall` or `rightSmall` $<$ y $\leq$ `rightBig`, then it must satisfy `topBig` $\leq$ x $\leq$ `bottomBig`.
 
-###### Pseudo Code
-
-```
-function GENERATE_HINT(mapSize):
-	topBig <- randomly choose from 0 to mapSize - 3
-	leftBig <- randomly choose from 0 to mapSize - 3
-	bottomBig <- randomly choose from topBig + 2 to mapSize - 1
-	rightBig <- randomly choose from leftBig + 2 to mapSize - 1
-	size = min(bottomBig-topBig, rightBig-leftBig)
-	bottomBig = topBig + size
-	rightBig = leftBig + size
-	topSmall <- randomly choose from 0 to mapSize - 3
-	leftSmall <- randomly choose from 0 to mapSize - 3
-	bottomSmall <- randomly choose from topSmall + 2 to mapSize - 1
-	rightSmall <- randomly choose from leftSmall + 2 to mapSize - 1
-	size = min(bottomSmall-topSmall, rightSmall-leftSmall)
-	bottomSmall = topSmall + size
-	rightSmall = leftSmall + size
-	return topBig, leftBig, bottomBig, rightBig, topSmall, leftSmall, bottomSmall, rightSmall
-
-function VERIFY_HINT():
-	return 
-```
-
 ##### Hint 15: The treasure is in a region that has mountain.
-
-###### Explanation
 
 **Generate Hint:** Do nothing, we just return a number that indicates this is hint 15
 **Verify Hint:** Checking the accuracy of the hint by checking whether there exists a mountain at the tile that contains treasure exists or not. If no, then the hint is inaccurate
-
-###### Pseudo Code
-
-```
-function GENERATE_HINT ():
-	return
-
-function VERIFY_HINT(treasure_position):
-	IF at treasure_position, there is mountain
-		return true
-	END IF
-	return false
-```
 
 #### Game Play
 
@@ -874,9 +433,8 @@ def scan(size):
 ###### Description
 
 First, random the step agent has to move. If the pirate has been released, the agent simply follow the pirate since the pirate's path to treasure is implemented as the shortest path.
-- calculate the number of unscanned tile in four direction from the agent
-- rank the calculation and randomly pick the direction from the two highest result
-// bu gium phan nay nha nq t hong biet giai thich logic agent sao, thank you
+
+Otherwise, we calculate the number of unscanned tile in all four direction from where the agent is standing and rank them in descending order. Then, the direction is randomly picked from two highest result
 
 ###### Pseudo Code
 
@@ -907,10 +465,9 @@ def agent_move:
 			END FOR
 		END FOR
 		sort direction_count in descending order
-		pick two directions that are largest in direction_count
+		pick randomly from two directions that are largest in direction_count
 	END ELSE
-	move half number of steps in first direction
-	move remaining steps in second direction
+	move agent
 	update agent's position on map
 ```
 
@@ -918,9 +475,7 @@ def agent_move:
 
 ###### Description
 
-- Get the pirate move direction
-- teleport the agent to the position that lies 3-4 steps from the pirate in the direction that the pirate move
-// bu gium phan nay nha nq t hong biet giai thich logic agent sao, thank you
+First, we get the direction that the pirate will move in order to reach the treasure. Then, the agent will teleport to the position that lies 3 or 4 steps further from the pirate and in the direction that the pirate moves.
 
 ###### Pseudo Code
 
@@ -972,6 +527,10 @@ We use `termcolor` library for visualization.
   1. Blue
   1. Grey 
   1. Green	
+
+As illustated below: 
+
+![](2023-01-07-18-42-30.png)
 
 ### Test cases
 
