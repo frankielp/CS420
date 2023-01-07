@@ -21,7 +21,7 @@ class Game():
         self.small_scan=3
         self.large_scan=5
         self.log=''
-        self.view=False
+        self.visualize=False
 
     def input(self,filename,visualize_flag):
         self.testcase=int(filename[-6:-4])
@@ -32,7 +32,7 @@ class Game():
             self.release_turn=int(f.readline().replace('\n',''))
         self.small_scan=max(3,self.map.w//20)
         self.large_scan=max(5,self.map.w//10)
-        self.view=visualize_flag
+        self.visualize=visualize_flag
     def get_hint(self):
         # p = 0.045 for hints that are rare
         # hint 6 and hint 13 prison shouldnt be <reveal and >=release
@@ -220,18 +220,29 @@ class Game():
         # mountain
         while True:
             step=1
-            if (isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay] or str(OCEAN) in self.map.board[ax][ay])) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
+            try:
+                if (isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay] or str(OCEAN) in self.map.board[ax][ay])) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
+                    if direction=='N':
+                        ax-=step
+                    elif direction=='S':
+                        ax+=step
+                    elif direction=='E':
+                        ay+=step
+                    elif direction=='W':
+                        ay-=step
+                    num_step+=1
+                else:
+                    break
+            except:
                 if direction=='N':
-                    ax-=step
+                    direction=='S'
                 elif direction=='S':
-                    ax+=step
+                    direction=='N'
                 elif direction=='E':
-                    ay+=step
+                    direction=='W'
                 elif direction=='W':
-                    ay-=step
+                    direction=='E'
                 num_step+=1
-            else:
-                break
                     
         # Correction
         ax=min(max(0,ax),self.map.w-1)
@@ -239,7 +250,7 @@ class Game():
 
         self.map.agent_pos=(ax,ay)
         self.map.board[ax][ay]=str(self.map.board[ax][ay])+AGENT
-        log=f'Agent move {num_step} steps to direction {direction}\n'
+        log=f'Agent move {num_step} steps in direction {direction}\n'
         return log
     def teleport_agent(self,direction):
         ax,ay=self.map.agent_pos
@@ -311,12 +322,13 @@ class Game():
         log+=f'The pirate is free at the beginning of the {self.release_turn}th turn\n'
         self.log+='START GAME\n'+log
         print('START GAME\n'+log,end='')
-        if self.view:
+        print(self.visualize)
+        if self.visualize:
             self.map.visualize()
         while self.result is None:
             self.turn+=1
             log=f'\nTURN {self.turn}\n'
-            if self.view:
+            if self.visualize:
                 print('--------------------------------------')
                 print(f'TURN {self.turn}')
 
@@ -356,7 +368,7 @@ class Game():
 
             self.log+=log
             # Print Log
-            if self.view:
+            if self.visualize:
                 print()
                 print('LOG\n'+log)
                 input('Press Enter to continue')
@@ -375,6 +387,10 @@ class Game():
             f.write(self.log)
 
 def main(input,output,visualize_flag):   
+    if visualize_flag=='True':
+        visualize_flag=True
+    else:
+        visualize_flag=False
     for filename in os.listdir(input):
         if filename[-4:]!='.txt': continue
         t=Game()
@@ -385,7 +401,7 @@ def main(input,output,visualize_flag):
 
 if __name__=='__main__':
 
-    if (len(sys.argv) != 3):
+    if (len(sys.argv) != 4):
         print('usage:\t python game.py <input_dir> <output_dir> <visualize option>')
         sys.exit(0)
     main(sys.argv[1],sys.argv[2],sys.argv[3])

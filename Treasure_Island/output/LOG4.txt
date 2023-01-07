@@ -1,0 +1,58 @@
+56
+WIN
+START GAME
+Agent is allocated at (43,6)
+The pirate’s prison is going to reveal the at the beginning of 3 turn
+The pirate is free at the beginning of the 46th turn
+
+TURN 1
+First hint is always true
+HINT: A half right of the map does not have treasure
+Verification: True
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps to direction N
+Agent moves straight small steps into x=40 y=6
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent move 5 steps to direction E
+Agent moves straight large steps into x=40 y=11
+
+TURN 2
+Pirate give hint: the treasure is somewhere inside the gap between 2 squares:
+	The bigger square bounded by row 43 on top; row 49 at the bottom; column 38 on the left and column 44 on the right
+	The smaller square bounded by row 46 on top; row 46 at the bottom; column 42 on the left and column 42 on the right
+	
+Add hint to hint list
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps to direction E
+Agent moves straight small steps into x=40 y=14
+Conduct small scan
+Found nothing
+
+ACTION: VERIFICATION
+HINT: the treasure is somewhere inside the gap between 2 squares:
+	The bigger square bounded by row 43 on top; row 49 at the bottom; column 38 on the left and column 44 on the right
+	The smaller square bounded by row 46 on top; row 46 at the bottom; column 42 on the left and column 42 on the right
+	
+Verification: False
+
+TURN 3
+The prison of pirate locate at x=13,y=11
+Pirate give hint: the treasure is somewhere inside the gap between 2 squares:
+	The bigger square bounded by row 76 on top; row 79 at the bottom; column 11 on the left and column 14 on the right
+	The smaller square bounded by row 78 on top; row 78 at the bottom; column 13 on the left and column 13 on the right
+	
+Add hint to hint list
+
+ACTION: MOVE_LARGE
+Agent move 5 steps to direction N
+Agent moves straight large steps into x=35 y=14
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found Treasure at x=31 y=10
+GAME RESULT:WIN

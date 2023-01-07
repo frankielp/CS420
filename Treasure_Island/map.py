@@ -79,6 +79,9 @@ class Map():
                         color=COLOR['PIRATE']
                     elif MASKED in self.board[i][j]:
                         color=COLOR['MASKED']
+                    else:
+                        region=int(str(self.board[i][j])[0])
+                        color=COLOR['REGION'][region%len(COLOR['REGION'])]
                 elif self.board[i][j]==OCEAN:
                     color=COLOR['OCEAN']
                 else:
