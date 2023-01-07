@@ -82,7 +82,7 @@ class Map():
                 elif self.board[i][j]==OCEAN:
                     color=COLOR['OCEAN']
                 else:
-                    region=int(str(self.board[i][j])[:1])
+                    region=int(str(self.board[i][j])[0])
                     color=COLOR['REGION'][region%len(COLOR['REGION'])]
                 text = colored('{:>4}'.format(self.board[i][j]), color, attrs=["reverse", "blink"])
                 print(text,end='')
@@ -301,7 +301,7 @@ class Map():
                     except:
                         continue
                 return False
-            if verify_hint_10 (hint, self.treasure_pos):
+            if verify_hint_10 (self.board, self.treasure_pos):
                 veri_flag=True
                 for i in range(h):
                     for j in range(w):
@@ -319,15 +319,21 @@ class Map():
             '''
             def bounded_ocean(i,j,dist):
                 if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: return False
-                region=int(str(self.board[i][j])[:1])
-                if region==0: return False
+                if isinstance(self.board[i][j],str):
+                    region=int(str(self.board[i][j])[0])
+                else:
+                    region=self.board[i][j]
+                if region==OCEAN: return False
                 x=[-1,0,1,0]
                 y = [0,1,0,-1]
                 for d in range(1,dist):
                     for t in range(4):
                         try:
-                            tile_region=int(self.board[i+x[t]*d][j+y[t]*d][:1])
-                            if tile_region==0:return True
+                            if isinstance(self.board[i+x[t]*d][j+y[t]*d],str):
+                                tile_region=int(self.board[i+x[t]*d][j+y[t]*d][:1])
+                            else:
+                                tile_region=self.board[i+x[t]*d][j+y[t]*d]
+                            if tile_region==OCEAN:return True
                         except:
                             continue
                 return False
@@ -441,7 +447,7 @@ class Map():
                     for j in range(0,y+1):
                         tmp_mask.add((i,j))
             elif direction==7: #NE
-                for i in range(0,x):
+                for i in range(0,x+1):
                     for j in range(y,self.w):
                         tmp_mask.add((i,j))
             elif direction==8: #NW

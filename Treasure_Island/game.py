@@ -21,7 +21,7 @@ class Game():
         self.small_scan=3
         self.large_scan=5
         self.log=''
-        self.view=True
+        self.view=False
 
     def input(self,filename):
         self.testcase=int(filename[-6:-4])
@@ -36,11 +36,9 @@ class Game():
         if self.turn>=self.reveal_prison_turn and self.turn<self.release_turn:
             choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, (1-0.07*12)/3, 0.07))
         else:
-            choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.14, 0, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.14, (1-0.07*12)/3, 0, (1-0.07*12)/3, 0.07))
-        
+            choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.14, 0, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.14, (1-0.07*12)/3, 0, (1-0.07*12)/3, 0.07))  
         # debug
-        choice=10
-
+        # choice=15
         hint,log=generateHint(choice,self.map.board,self.map.region)
         self.hint.append([hint,log])
         log='Pirate give hint: '+log+'\nAdd hint to hint list\n'
