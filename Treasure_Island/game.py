@@ -53,13 +53,13 @@ class Game():
             action_log+='HINT: '+log+'\n'
             action_log+='Verification: '+str(veri_flag)+'\n'
         elif self.action_list[choice]=='move_scan_small':
-            self.agent_move('small',direction)
+            action_log+=self.agent_move('small',direction)
             action_log+=f'Agent moves straight small steps into x={self.map.agent_pos[0]} y={self.map.agent_pos[1]}\n'
             action_log+='Conduct small scan\n'
             log=self.scan(self.small_scan)
             action_log+=log
         elif self.action_list[choice]=='move_large':
-            self.agent_move('large',direction)
+            action_log+=self.agent_move('large',direction)
             action_log+=f'Agent moves straight large steps into x={self.map.agent_pos[0]} y={self.map.agent_pos[1]}\n'
         elif self.action_list[choice]=='scan_large':
             action_log+='Conduct large scan\n'
@@ -119,12 +119,14 @@ class Game():
                     log+=f'Found Treasure at x={i} y={j}\n'
                     continue
                 try:
-                    if isinstance(self.map.board[i][j],str) and AGENT in self.map.board[i][j]:
-                        self.map.board[i][j]=MASKED+AGENT
-                    else:
-                        self.map.board[i][j]=MASKED
+                    self.map.board[x][y]=int(self.map.board[x][y])
                 except:
                     pass
+                if isinstance(self.map.board[x][y],str): 
+                    if MASKED in self.map.board[x][y]: continue
+                    self.map.board[x][y]=MASKED+self.map.board[x][y][-1]
+                else:
+                    self.map.board[x][y]=MASKED
 
         if self.result is None:
             log+='Found nothing\n'
@@ -193,12 +195,9 @@ class Game():
                     if j<ay: direction_count['W']+=1
                     elif i>ay: direction_count['E']+=1
         direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True) 
-        if  (str(direction_count[0])=='N' and str(direction_count[1])=='S') or (str(direction_count[1])=='N' and str(direction_count[0])=='S') or (str(direction_count[0])=='E' and str(direction_count[1])=='W') or (str(direction_count[1])=='E' and str(direction_count[0])=='W'):
-            direction+=str(direction_count[0])+str(direction_count[2])
-        else:
-            direction+=str(direction_count[0])+str(direction_count[1])
+        direction=str(direction_count[0])
         if self.pirate:
-            direction=pi_direction
+            direction=pi_direction[0]
         #     common=''
         #     for w in direction:
         #         if w in pi_direction:
@@ -206,26 +205,40 @@ class Game():
         # else:
             
         print(direction)
-        for i in range(len(direction)):
-            if i==len(direction)-1:
-                tmp_step=step
+
+        if direction=='N':
+            ax-=step
+        elif direction=='S':
+            ax+=step
+        elif direction=='E':
+            ay+=step
+        elif direction=='W':
+            ay-=step
+        num_step=step
+        # mountain
+        while True:
+            step=1
+            if isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay]):
+                if direction=='N':
+                    ax-=step
+                elif direction=='S':
+                    ax+=step
+                elif direction=='E':
+                    ay+=step
+                elif direction=='W':
+                    ay-=step
+                num_step+=1
             else:
-                tmp_step=step//2+1
-            if direction[i]=='N':
-                ax-=tmp_step
-            elif direction[i]=='S':
-                ax+=tmp_step
-            elif direction[i]=='E':
-                ay+=tmp_step
-            elif direction[i]=='W':
-                ay-=tmp_step
-            step-=tmp_step
+                break
+                    
         # Correction
         ax=min(max(0,ax),self.map.w-1)
         ay=min(max(0,ay),self.map.h-1)
 
         self.map.agent_pos=(ax,ay)
         self.map.board[ax][ay]=str(self.map.board[ax][ay])+AGENT
+        log=f'Agent move {num_step} steps to direction {direction}\n'
+        return log
     def teleport_agent(self,direction):
         ax,ay=self.map.agent_pos
         self.map.board[ax][ay]=str(self.map.board[ax][ay]).replace(AGENT,'')
