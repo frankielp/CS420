@@ -5,7 +5,7 @@ class MapGenerator:
     def __init__(self,size,num_of_region,num_of_prison,num_of_mountain):
         self.map=[]
         self.size=size
-        self.num_of_region=num_of_region
+        self.num_of_region=num_of_region-1
         self.num_of_prison=num_of_prison
         self.num_of_mountain=num_of_mountain
         
@@ -161,7 +161,7 @@ class MapGenerator:
             else: 
                 f.write(f'{random.randint(3,4)}\n')
             f.write(f'{random.randint(self.size/2,self.size/2+self.size//10)}\n') #turn release pirate
-            f.write(f'{self.num_of_region}\n')
+            f.write(f'{self.num_of_region+1}\n')
             f.write(f'{self.treasure_pos[0]} {self.treasure_pos[1]}\n')
 #             map
             for i in range(len(self.map)):

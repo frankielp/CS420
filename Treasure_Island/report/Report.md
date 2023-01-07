@@ -30,6 +30,7 @@
 
 #### Maps generator
 
+
 ##### Algorithm's description
 
 We first initialize a map of customed size filled with value -1 for all positions. Then, with function `create_ocean`, those tiles that are outlying will becomes *Ocean*, and by using function `expand_prob`, *Ocean* tiles can be expanded to inside tiles small probabilities. Then we create regions with `create_region` function; basically, we traverse the whole map and pick the first tile that has not been assigned region value, take that tile as the initial location for the region and expand to adjacent tiles until the desired quantity is reached. Then we allocate mountains, prisons and treasure by `allocate_mountain`, `allocate_prison` and `allocate_trasure` respectively.
@@ -873,7 +874,8 @@ def scan(size):
 ###### Description
 
 First, random the step agent has to move. If the pirate has been released, the agent simply follow the pirate since the pirate's path to treasure is implemented as the shortest path.
-
+- calculate the number of unscanned tile in four direction from the agent
+- rank the calculation and randomly pick the direction from the two highest result
 // bu gium phan nay nha nq t hong biet giai thich logic agent sao, thank you
 
 ###### Pseudo Code
@@ -916,6 +918,8 @@ def agent_move:
 
 ###### Description
 
+- Get the pirate move direction
+- teleport the agent to the position that lies 3-4 steps from the pirate in the direction that the pirate move
 // bu gium phan nay nha nq t hong biet giai thich logic agent sao, thank you
 
 ###### Pseudo Code

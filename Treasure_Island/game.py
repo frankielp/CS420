@@ -21,7 +21,7 @@ class Game():
         self.small_scan=3
         self.large_scan=5
         self.log=''
-        self.view=False
+        self.view=True
 
     def input(self,filename):
         self.testcase=int(filename[-6:-4])
@@ -30,6 +30,8 @@ class Game():
             f.readline()
             self.reveal_prison_turn=int(f.readline().replace('\n',''))
             self.release_turn=int(f.readline().replace('\n',''))
+        self.small_scan=max(3,self.map.w//20)
+        self.large_scan=max(5,self.map.w//10)
     def get_hint(self):
         # p = 0.045 for hints that are rare
         # hint 6 and hint 13 prison shouldnt be <reveal and >=release
@@ -196,9 +198,10 @@ class Game():
                     if j<ay: direction_count['W']+=1
                     elif i>ay: direction_count['E']+=1
         direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True) 
-        direction=str(direction_count[random.randint(0,1)])
-        # if self.pirate:
-        #     direction=pi_direction[0]
+        print(direction_count)
+        direction=str(direction_count[random.choice([0,0,0,0,0,0,0,0,1,1])]) #80/20
+        if self.pirate:
+            direction=str(pi_direction[random.choice([0,0,0,0,0,0,0,0,1,1])])
         #     common=''
         #     for w in direction:
         #         if w in pi_direction:
@@ -216,7 +219,7 @@ class Game():
         # mountain
         while True:
             step=1
-            if isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay]):
+            if (isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay] or str(OCEAN) in self.map.board[ax][ay])) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
                 if direction=='N':
                     ax-=step
                 elif direction=='S':
@@ -241,7 +244,7 @@ class Game():
         ax,ay=self.map.agent_pos
         self.map.board[ax][ay]=str(self.map.board[ax][ay]).replace(AGENT,'')
         ax,ay=self.map.pirate_pos   
-        step=3
+        step=2
         for i in range(len(direction)):
             if i==len(direction)-1:
                 tmp_step=step
@@ -259,7 +262,7 @@ class Game():
         
         while True:
             step=1
-            if isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay]):
+            if (isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay] or str(OCEAN) in self.map.board[ax][ay])) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
                 if direction[0]=='N':
                     ax-=step
                 elif direction[0]=='S':
@@ -296,8 +299,8 @@ class Game():
                 action_choice_2=random.randint(1,len(self.action_list)-1)
             else:
                 action_choice_2=random.randint(0,len(self.action_list)-1)
-            # no move_scan_small -> scan large
-            if action_choice_2!=action_choice_1 and (action_choice_1!=1 or action_choice_1!=3): break
+            # no move_scan_small -> scan large and no move large-> move scan small
+            if action_choice_2!=action_choice_1 and (action_choice_1!=1 or action_choice_1!=3) and (action_choice_1!=2 or action_choice_1!=1): break
 
         return action_choice_1,action_choice_2
 
@@ -338,10 +341,12 @@ class Game():
                     log+=self.teleport_agent(direction)
                     self.teleport=True
                 log+=self.action(action_choice_1,direction)
-                log+=self.action(action_choice_2,direction)
+                if self.result is None:
+                    log+=self.action(action_choice_2,direction)
             else:
                 log+=self.action(action_choice_1)
-                log+=self.action(action_choice_2)
+                if self.result is None:
+                    log+=self.action(action_choice_2)
 
             # Visualization
             self.map.visualize()
