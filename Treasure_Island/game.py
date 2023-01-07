@@ -177,24 +177,34 @@ class Game():
         ax,ay=self.map.agent_pos
         self.map.board[ax][ay]=str(self.map.board[ax][ay]).replace(AGENT,'')
         if choice=='large':
-            step=random.randint(5,6)
+            step=random.randint(4,5)
         elif choice=='small':
-            step=random.randint(3,4)
+            step=3
+            
+        #Decide direction based on not scan
+        direction=''
+        direction_count={'N':0,'E':0,'W':0,'S':0}
+        for i in range(self.map.h):
+            for j in range(self.map.w):
+                if self.map.board[i][j]!=OCEAN and not (isinstance(self.map.board[i][j],str) and MASKED in self.map.board[i][j]):
+                    if i<ax: direction_count['N']+=1
+                    elif i>ax: direction_count['S']+=1
+                    if j<ay: direction_count['W']+=1
+                    elif i>ay: direction_count['E']+=1
+        direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True) 
+        if  (str(direction_count[0])=='N' and str(direction_count[1])=='S') or (str(direction_count[1])=='N' and str(direction_count[0])=='S') or (str(direction_count[0])=='E' and str(direction_count[1])=='W') or (str(direction_count[1])=='E' and str(direction_count[0])=='W'):
+            direction+=str(direction_count[0])+str(direction_count[2])
+        else:
+            direction+=str(direction_count[0])+str(direction_count[1])
         if self.pirate:
             direction=pi_direction
-        else:
-            direction=''
-            direction_count={'N':0,'E':0,'W':0,'S':0}
-            for i in range(self.map.h):
-                for j in range(self.map.w):
-                    if self.map.board[i][j]!=OCEAN and self.map.board[i][j]!=MASKED and self.map.board[i][j]!=MASKED+AGENT:
-                        if i<ax: direction_count['N']+=1
-                        elif i>ax: direction_count['S']+=1
-                        if j<ay: direction_count['W']+=1
-                        elif i>ay: direction_count['E']+=1
-            print(direction_count)
-            direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True)    
-            direction+=str(direction_count[0])+str(direction_count[1])
+        #     common=''
+        #     for w in direction:
+        #         if w in pi_direction:
+        #             common+=w 
+        # else:
+            
+        print(direction)
         for i in range(len(direction)):
             if i==len(direction)-1:
                 tmp_step=step
@@ -219,7 +229,7 @@ class Game():
         ax,ay=self.map.agent_pos
         self.map.board[ax][ay]=str(self.map.board[ax][ay]).replace(AGENT,'')
         ax,ay=self.map.pirate_pos   
-        step=4
+        step=3
         for i in range(len(direction)):
             if i==len(direction)-1:
                 tmp_step=step
@@ -242,7 +252,7 @@ class Game():
 
     def choose_action(self):
         # self.action_list=['verification','move_scan_small','move_large','scan_large']
-        # no scan if agent on MASKED and move large
+        # agent on MASKED and move large first
         ax,ay=self.map.agent_pos
         if isinstance(self.map.board[ax][ay],str) and MASKED in self.map.board[ax][ay]:
             action_choice_1=2
