@@ -986,6 +986,12 @@ The game run successfully in all 5 test cases.
 
 The agent is not guaranteed to win the game or find out the optimal strategy to defeat the pirate.
 
+We manage to successfully implement all of 15 hints. After several time testing the game, we think that every hint is generated correctly and so is the verification. 
+
 ### Comments
 
+We have not found out a better way to implement the verifying function for Hint 13. Currently, the function is quite long as the verifying process is based on 16 cases for 8 directions from center of the map and from the prison where pirate stays.
+
 ### Conclusion
+
+In conclusion, the game runs smoothly and is able to give the result. 
