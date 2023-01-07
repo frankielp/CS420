@@ -182,18 +182,18 @@ def generateHint9(map: list):
 
     for x in range(m):
         for y in range(m):
-          if isinstance(map[x][y],str) and MASKED in map[x][y]: continue
           region1 = getRegion(map[x][y])
           if (region1==0): continue
           for i in range(4):
               xt,yt = x+xp[i], y+yp[i]
-              if not isInside(xt, yt, m) or  isinstance(map[x][y],str) and MASKED in map[x][y]: continue
+              if not isInside(xt, yt, m): continue
               region2 = getRegion(map[xt][yt])
               # print(region1, region2)
               if (region2!=0 and region2!=region1):
                 boundary.add((min(region1, region2),max(region1,region2)))
+    print(boundary)
     chosenBoundary = random.choice(list(boundary))
-    # print(boundary)
+    
     # print(chosenBoundary)
     return [8, chosenBoundary[0], chosenBoundary[1]]
 

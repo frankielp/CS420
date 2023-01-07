@@ -950,9 +950,29 @@ def verification
 ```
 
 ### Visualization 
-use termcolor library
+
+We use `termcolor` library for visualization.
+
+- OCEAN: White
+- TREASURE: Yellow	
+- MASKED TILES: White
+- AGENT: Red
+- PIRATE: Red
+- REGION: 
+  1. Magenta
+  1. Cyan
+  1. Blue
+  1. Grey 
+  1. Green	
 
 ### Test cases
+
+We generate 5 maps for test cases:
+- 16 x 16
+- 32 x 32
+- 64 x 64
+
+Action LOG for each test case is recorded in the corresponding text file stored in `output` folder. 
 
 ### Evaluation
 
