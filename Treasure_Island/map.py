@@ -249,28 +249,33 @@ class Map():
             '''
             def is_boundary_2(i,j,region1,region2):
                 if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: return False
-                region=int(str(self.board[i][j])[:1])
-                if region!=region1 or region!=region2: return False
+                if isinstance(self.board[i][j],str):
+                    region=int(str(self.board[i][j])[0])
+                else:
+                    region=self.board[i][j]
+                if region!=region1 and region!=region2: return False
                 x=[-1,0,1,0]
                 y = [0,1,0,-1]
                 for t in range(4):
-                    try:
-                        tile_region=int(self.board[i+x[t]][j+y[t]][:1])
-                        if (region==region1 and tile_region==region2) or (region==region2 and tile_region==region1): return True
-                    except:
-                        continue
+                    if isinstance(self.board[i+x[t]][j+y[t]],str):
+                        tile_region=int(str(self.board[i+x[t]][j+y[t]])[0])
+                    else:
+                        tile_region=self.board[i+x[t]][j+y[t]]
+                    if (region==region1 and tile_region==region2) or (region==region2 and tile_region==region1): 
+                        return True
+
                 return False
             region1,region2=hint[1],hint[2]
             if verify_hint_9 (hint, self.board,self.treasure_pos):
                 veri_flag=True
-                for i in range(h):
-                    for j in range(w):
+                for i in range(self.h):
+                    for j in range(self.w):
                         if not is_boundary_2(i,j,region1,region2):
                             mask.add((i,j))
             else:
                 veri_flag=False
-                for i in range(h):
-                    for j in range(w):
+                for i in range(self.h):
+                    for j in range(self.w):
                         if is_boundary_2(i,j,region1,region2):
                             mask.add((i,j))
         elif hint[0]+1==10:
@@ -279,13 +284,19 @@ class Map():
             '''
             def is_boundary(i,j):
                 if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: return False
-                region=int(str(self.board[i][j])[:1])
-                if region==0: return False
+                if isinstance(self.board[i][j],str):
+                    region=int(str(self.board[i][j])[0])
+                else:
+                    region=self.board[i][j]
+                if region==OCEAN: return False
                 x=[-1,0,1,0]
                 y = [0,1,0,-1]
                 for t in range(4):
                     try:
-                        tile_region=int(self.board[i+x[t]][j+y[t]][:1])
+                        if isinstance(self.board[i+x[t]][j+y[t]],str):
+                            tile_region=int(str(self.board[i+x[t]][j+y[t]])[0])
+                        else:
+                            tile_region=self.board[i+x[t]][j+y[t]]
                         if (tile_region!=region): return True
                     except:
                         continue

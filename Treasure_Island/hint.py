@@ -169,7 +169,10 @@ def generateHint9(map: list):
     yp = [0,1,0,-1]
 
     def getRegion(region):
-      s = str(region)
+      if isinstance(region,str):
+        s = str(region[0])
+      else:
+        s=str(region)
       for i in reversed(range(0, len(s))):
         if "0" <= s[i] <= "9":
           return int(s[0:i+1])
@@ -225,11 +228,18 @@ def verify_hint_10(map: list, treasurePos) -> bool:
     yp = [0, 1, 0, -1]
 
     x, y = treasurePos
-
+    if isinstance(map[x][y],str):
+      pos_region=int(map[x][y][0])
+    else:
+      pos_region=map[x][y]
     for i in range(4):
         xt = x + xp[i]
         yt = y + yp[i]
-        if (isInside(xt,yt,len(map)) and map[xt][yt]!=0 and map[xt][yt]!=map[x][y]):
+        if isinstance(map[xt][yt],str):
+          region=int(map[xt][yt][0])
+        else:
+          region=map[xt][yt]
+        if (isInside(xt,yt,len(map)) and region!=OCEAN and region!=pos_region):
             return True
 
     return False
@@ -252,7 +262,11 @@ def verify_hint_11(hint: list, map: list, treasurePos):
       for d in range(1, dist):
         xt = x+xp[i]*d
         yt = y+yp[i]*d
-        if (isInside(xt,yt,len(map)) and map[xt][yt]==0):
+        if isinstance(map[xt][yt],str):
+          region=int(map[xt][yt][0])
+        else:
+          region=map[xt][yt]
+        if (isInside(xt,yt,len(map)) and region==OCEAN):
             return True
 
     return False

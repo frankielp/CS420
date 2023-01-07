@@ -1,1 +1,1 @@
-move
+get_first_hint

@@ -39,7 +39,7 @@ class Game():
             choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.14, 0, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.14, (1-0.07*12)/3, 0, (1-0.07*12)/3, 0.07))
         
         # debug
-        # choice=4
+        choice=10
 
         hint,log=generateHint(choice,self.map.board,self.map.region)
         self.hint.append([hint,log])
@@ -111,8 +111,8 @@ class Game():
         log=''
         x,y=self.map.agent_pos
         tx,ty=self.map.treasure_pos
-        for i in range(x-size//2,x+size//2+1):
-            for j in range(y-size//2,y+size//2+1):
+        for i in range(max(0,x-size//2),min(x+size//2+1,self.map.h)):
+            for j in range(max(0,y-size//2),min(y+size//2+1,self.map.w)):
                 if i==tx and j==ty:
                     self.map.board[i][j]=str(self.map.board[i][j])+MASKED
                     self.result='WIN'
@@ -172,7 +172,7 @@ class Game():
         veri_flag=self.map.masking(hint)
         action_log='First hint is always true\n'
         action_log+='HINT: '+log+'\n'
-        action_log+='Verification: '+str(veri_flag)+'\n'
+        action_log+='Verification: '+str(flag)+'\n'
         return action_log
             
     def agent_move(self,choice,pi_direction=None):
@@ -188,15 +188,19 @@ class Game():
         direction_count={'N':0,'E':0,'W':0,'S':0}
         for i in range(self.map.h):
             for j in range(self.map.w):
-                if self.map.board[i][j]!=OCEAN and not (isinstance(self.map.board[i][j],str) and MASKED in self.map.board[i][j]):
+                try:
+                    region=int(self.map.board[i][j][0])
+                except:
+                    region=self.map.board[i][j]
+                if region!=OCEAN and not (isinstance(self.map.board[i][j],str) and MASKED in self.map.board[i][j]):
                     if i<ax: direction_count['N']+=1
                     elif i>ax: direction_count['S']+=1
                     if j<ay: direction_count['W']+=1
                     elif i>ay: direction_count['E']+=1
         direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True) 
         direction=str(direction_count[random.randint(0,1)])
-        if self.pirate:
-            direction=pi_direction[0]
+        # if self.pirate:
+        #     direction=pi_direction[0]
         #     common=''
         #     for w in direction:
         #         if w in pi_direction:
@@ -255,6 +259,24 @@ class Game():
                 ay-=tmp_step
             step-=tmp_step
         
+        while True:
+            step=1
+            if isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay]):
+                if direction[0]=='N':
+                    ax-=step
+                elif direction[0]=='S':
+                    ax+=step
+                elif direction[0]=='E':
+                    ay+=step
+                elif direction[0]=='W':
+                    ay-=step
+            else:
+                break
+                    
+        # Correction
+        ax=min(max(0,ax),self.map.w-1)
+        ay=min(max(0,ay),self.map.h-1)
+
         self.map.agent_pos=(ax,ay)
         self.map.board[ax][ay]=str(self.map.board[ax][ay])+AGENT
         log=f'Agent teleports to x={ax} y={ay}\n'
