@@ -21,7 +21,7 @@ class Game():
         self.small_scan=3
         self.large_scan=5
         self.log=''
-        self.view=False
+        self.view=True
 
     def input(self,filename):
         self.testcase=int(filename[-6:-4])
@@ -274,7 +274,7 @@ class Game():
         print('START GAME\n'+log,end='')
         while self.result is None:
             self.turn+=1
-            log=f'TURN {self.turn}\n'
+            log=f'\nTURN {self.turn}\n'
             print('--------------------------------------')
             print(f'TURN {self.turn}')
 

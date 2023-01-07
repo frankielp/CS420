@@ -54,8 +54,9 @@ class Map():
     def masking(self,hint):
         veri_flag,mask=self.generate_mask(hint)
         for x,y in mask:
-            if isinstance(self.board[x][y],str) and AGENT in self.board[x][y]:
-                self.board[x][y]=MASKED+AGENT
+            if isinstance(self.board[x][y],str): 
+                if MASKED in self.board[x][y] or PRISON in self.board[x][y] or MOUNTAIN in self.board[x][y]: continue
+                self.board[x][y]=MASKED+self.board[x][y]
             else:
                 self.board[x][y]=MASKED
         return veri_flag
