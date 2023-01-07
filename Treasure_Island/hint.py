@@ -179,12 +179,12 @@ def generateHint9(map: list):
 
     for x in range(m):
         for y in range(m):
-          if map[x][y]==MASKED or map[x][y]==MASKED+AGENT: continue
+          if isinstance(map[x][y],str) and MASKED in map[x][y]: continue
           region1 = getRegion(map[x][y])
           if (region1==0): continue
           for i in range(4):
               xt,yt = x+xp[i], y+yp[i]
-              if not isInside(xt, yt, m) or  map[xt][yt]==MASKED or map[xt][yt]==MASKED+AGENT: continue
+              if not isInside(xt, yt, m) or  isinstance(map[x][y],str) and MASKED in map[x][y]: continue
               region2 = getRegion(map[xt][yt])
               # print(region1, region2)
               if (region2!=0 and region2!=region1):

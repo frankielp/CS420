@@ -21,7 +21,7 @@ class Game():
         self.small_scan=3
         self.large_scan=5
         self.log=''
-        self.view=True
+        self.view=False
 
     def input(self,filename):
         self.testcase=int(filename[-6:-4])
@@ -36,7 +36,7 @@ class Game():
         if self.turn>=self.reveal_prison_turn and self.turn<self.release_turn:
             choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3, 0.07, (1-0.07*12)/3, 0.07))
         else:
-            choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0, (1-0.07*12)/3+0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3+0.07, 0, (1-0.07*12)/3, 0.07))
+            choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.14, 0, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.14, (1-0.07*12)/3, 0, (1-0.07*12)/3, 0.07))
         
         # debug
         # choice=4
@@ -114,7 +114,7 @@ class Game():
         for i in range(x-size//2,x+size//2+1):
             for j in range(y-size//2,y+size//2+1):
                 if i==tx and j==ty:
-                    self.map.board[i][j]=MASKED+TREASURE
+                    self.map.board[i][j]=str(self.map.board[i][j])+MASKED
                     self.result='WIN'
                     log+=f'Found Treasure at x={i} y={j}\n'
                     continue
@@ -124,9 +124,8 @@ class Game():
                     pass
                 if isinstance(self.map.board[i][j],str): 
                     if MASKED in self.map.board[i][j]: continue
-                    self.map.board[i][j]=MASKED+self.map.board[i][j][-1]
-                else:
-                    self.map.board[i][j]=MASKED
+                self.map.board[i][j]=str(self.map.board[i][j])+MASKED
+
 
         if self.result is None:
             log+='Found nothing\n'
@@ -134,47 +133,47 @@ class Game():
     def get_first_hint(self):
         flag=False
         while True:
-            for i in range(16):
-                hint,log=generateHint(i+1,self.map.board,self.map.region)
-                if hint[0]+1==1:
-                    flag=verify_hint_1(hint,self.map.treasure_pos)
-                elif hint[0]+1==2:
-                    treasure_region=int(self.map.board[self.map.treasure_pos[0]][self.map.treasure_pos[1]][:1])
-                    flag=verify_hint_2(hint,treasure_region)
-                elif hint[0]+1==3:
-                    treasure_region=int(self.map.board[self.map.treasure_pos[0]][self.map.treasure_pos[1]][:1])
-                    flag=verify_hint_3(hint,treasure_region)
-                elif hint[0]+1==4:
-                    flag=verify_hint_4(hint,self.map.treasure_pos)
-                elif hint[0]+1==5:
-                    flag=verify_hint_5(hint,self.map.treasure_pos)
-                elif hint[0]+1==6:
-                    flag=verify_hint_6(hint,self.map.treasure_pos,self.map.agent_pos,self.map.pirate_pos)
-                elif hint[0]+1==7:
-                    flag=verify_hint_7(hint,self.map.treasure_pos)
-                elif hint[0]+1==8:
-                    flag=verify_hint_8(hint,self.map.treasure_pos)
-                elif hint[0]+1==9:
-                    flag=verify_hint_9(hint,self.map.board,self.map.treasure_pos)
-                elif hint[0]+1==10:
-                    flag=verify_hint_10(self.map.board,self.map.treasure_pos)
-                elif hint[0]+1==11:
-                    flag=verify_hint_11(hint,self.map.board,self.map.treasure_pos)
-                elif hint[0]+1==12:
-                    flag=verify_hint_12(hint,self.map.h,self.map.treasure_pos)
-                elif hint[0]+1==13:
-                    flag=verify_hint_13(hint,self.map.h,self.map.pirate_pos,self.map.treasure_pos)
-                elif hint[0]+1==14:
-                    flag=verify_hint_14(hint,self.map.treasure_pos)
-                elif hint[0]+1==15:
-                    flag=verify_hint_15(self.map.board,self.map.treasure_pos)
-                if flag: 
-                    break
-            veri_flag=self.map.masking(hint)
-            action_log='First hint is always true\n'
-            action_log+='HINT: '+log+'\n'
-            action_log+='Verification: '+str(veri_flag)+'\n'
-            return action_log
+            i = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.14, 0, (1-0.07*12)/3, 0.07, 0.07, 0.07, 0.14, (1-0.07*12)/3, 0, (1-0.07*12)/3, 0.07))
+            hint,log=generateHint(i,self.map.board,self.map.region)
+            if hint[0]+1==1:
+                flag=verify_hint_1(hint,self.map.treasure_pos)
+            elif hint[0]+1==2:
+                treasure_region=int(self.map.board[self.map.treasure_pos[0]][self.map.treasure_pos[1]][:1])
+                flag=verify_hint_2(hint,treasure_region)
+            elif hint[0]+1==3:
+                treasure_region=int(self.map.board[self.map.treasure_pos[0]][self.map.treasure_pos[1]][:1])
+                flag=verify_hint_3(hint,treasure_region)
+            elif hint[0]+1==4:
+                flag=verify_hint_4(hint,self.map.treasure_pos)
+            elif hint[0]+1==5:
+                flag=verify_hint_5(hint,self.map.treasure_pos)
+            elif hint[0]+1==6:
+                flag=verify_hint_6(hint,self.map.treasure_pos,self.map.agent_pos,self.map.pirate_pos)
+            elif hint[0]+1==7:
+                flag=verify_hint_7(hint,self.map.treasure_pos)
+            elif hint[0]+1==8:
+                flag=verify_hint_8(hint,self.map.treasure_pos)
+            elif hint[0]+1==9:
+                flag=verify_hint_9(hint,self.map.board,self.map.treasure_pos)
+            elif hint[0]+1==10:
+                flag=verify_hint_10(self.map.board,self.map.treasure_pos)
+            elif hint[0]+1==11:
+                flag=verify_hint_11(hint,self.map.board,self.map.treasure_pos)
+            elif hint[0]+1==12:
+                flag=verify_hint_12(hint,self.map.h,self.map.treasure_pos)
+            elif hint[0]+1==13:
+                flag=verify_hint_13(hint,self.map.h,self.map.pirate_pos,self.map.treasure_pos)
+            elif hint[0]+1==14:
+                flag=verify_hint_14(hint,self.map.treasure_pos)
+            elif hint[0]+1==15:
+                flag=verify_hint_15(self.map.board,self.map.treasure_pos)
+            if flag: 
+                break
+        veri_flag=self.map.masking(hint)
+        action_log='First hint is always true\n'
+        action_log+='HINT: '+log+'\n'
+        action_log+='Verification: '+str(veri_flag)+'\n'
+        return action_log
             
     def agent_move(self,choice,pi_direction=None):
         ax,ay=self.map.agent_pos
@@ -195,7 +194,7 @@ class Game():
                     if j<ay: direction_count['W']+=1
                     elif i>ay: direction_count['E']+=1
         direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True) 
-        direction=str(direction_count[0])
+        direction=str(direction_count[random.randint(0,1)])
         if self.pirate:
             direction=pi_direction[0]
         #     common=''
@@ -203,9 +202,6 @@ class Game():
         #         if w in pi_direction:
         #             common+=w 
         # else:
-            
-        print(direction)
-
         if direction=='N':
             ax-=step
         elif direction=='S':
@@ -269,11 +265,17 @@ class Game():
         # agent on MASKED and move large first
         ax,ay=self.map.agent_pos
         if isinstance(self.map.board[ax][ay],str) and MASKED in self.map.board[ax][ay]:
-            action_choice_1=2
+            action_choice_1=random.randint(1,2)
         else:
-            action_choice_1=random.randint(0,len(self.action_list)-1)
+            if self.turn==1:
+                action_choice_1=random.randint(1,len(self.action_list)-1)
+            else:
+                action_choice_1=random.randint(0,len(self.action_list)-1)
         while True:
-            action_choice_2=random.randint(0,len(self.action_list)-1)
+            if self.turn==1:
+                action_choice_2=random.randint(1,len(self.action_list)-1)
+            else:
+                action_choice_2=random.randint(0,len(self.action_list)-1)
             # no move_scan_small -> scan large
             if action_choice_2!=action_choice_1 and (action_choice_1!=1 or action_choice_1!=3): break
 
@@ -285,6 +287,7 @@ class Game():
         log+=f'The pirate is free at the beginning of the {self.release_turn}th turn\n'
         self.log+='START GAME\n'+log
         print('START GAME\n'+log,end='')
+        self.map.visualize()
         while self.result is None:
             self.turn+=1
             log=f'\nTURN {self.turn}\n'
@@ -302,7 +305,8 @@ class Game():
                 self.free_pirate()
             if self.turn==1:
                 log+=self.get_first_hint()
-            log+=self.get_hint()
+            else:
+                log+=self.get_hint()
 
             # Choose action
             action_choice_1,action_choice_2=self.choose_action()

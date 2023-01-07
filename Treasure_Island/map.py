@@ -60,9 +60,7 @@ class Map():
                 pass
             if isinstance(self.board[x][y],str): 
                 if MASKED in self.board[x][y]: continue
-                self.board[x][y]=MASKED+self.board[x][y][-1]
-            else:
-                self.board[x][y]=MASKED
+            self.board[x][y]=str(self.board[x][y])+MASKED
         return veri_flag
     def visualize(self):
         print('{:>4}'.format(''),end='')
