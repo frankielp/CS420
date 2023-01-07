@@ -1,86 +1,83 @@
-291
-LOSE
+113
+WIN
 START GAME
-Agent is allocated at (7,29)
+Agent is allocated at (24,15)
 The pirate’s prison is going to reveal the at the beginning of 3 turn
 The pirate is free at the beginning of the 16th turn
 TURN 1
 First hint is always true
-HINT: These tile(s) do not contain the treasure: (24, 9)
+HINT: These tile(s) do not contain the treasure: (25, 23), (26, 11), (16, 22), (18, 18), (31, 4), (11, 29), (2, 17), (28, 8), (7, 6)
 Verification: True
-Pirate give hint: The treasure is in a region that has mountain.
-Add hint to hint list
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-
-ACTION: VERIFICATION
-HINT: The treasure is in a region that has mountain.
-Verification: False
-TURN 2
 Pirate give hint: A half top of the map does not have treasure
 Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=8 y=26
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-TURN 3
-The prison of pirate locate at x=9,y=7
-Pirate give hint: These tile(s) do not contain the treasure: (16, 13)
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=10 y=23
 
 ACTION: VERIFICATION
 HINT: A half top of the map does not have treasure
 Verification: True
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=21 y=17
+TURN 2
+Pirate give hint: These region(s) do not contain the treasure: 0, 1
+Add hint to hint list
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=23 y=16
+Conduct small scan
+Found nothing
+TURN 3
+The prison of pirate locate at x=17,y=10
+Pirate give hint: A half left of the map does not have treasure
+Add hint to hint list
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=21 y=13
+
+ACTION: VERIFICATION
+HINT: These region(s) do not contain the treasure: 0, 1
+Verification: True
 TURN 4
+Pirate give hint: These tile(s) do not contain the treasure: (29, 15), (0, 12), (18, 17), (12, 0), (27, 28), (13, 22), (25, 26), (21, 30), (23, 22), (3, 22)
+Add hint to hint list
+
+ACTION: VERIFICATION
+HINT: A half left of the map does not have treasure
+Verification: True
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+TURN 5
+Pirate give hint: This area does not contain the treasure: From row 3 to row 13, from column 24 to column 31
+Add hint to hint list
+
+ACTION: MOVE_LARGE
+Agent moves straight large steps into x=22 y=16
+
+ACTION: MOVE_SCAN_SMALL
+Agent moves straight small steps into x=23 y=18
+Conduct small scan
+Found nothing
+TURN 6
 Pirate give hint: The treasure is somewhere in an area bounded by 2-3 tiles from sea
 Add hint to hint list
 
 ACTION: MOVE_LARGE
-Agent moves straight large steps into x=13 y=22
+Agent moves straight large steps into x=25 y=21
 
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=15 y=21
-Conduct small scan
-Found nothing
-TURN 5
-Pirate give hint: the treasure is somewhere inside the gap between 2 squares:
-	The bigger square bounded by row 6 on top; row 11 at the bottom; column 15 on the left and column 20 on the right
-	The smaller square bounded by row 9 on top; row 10 at the bottom; column 16 on the left and column 17 on the right
-	
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=18 y=20
-
-ACTION: VERIFICATION
-HINT: These tile(s) do not contain the treasure: (16, 13)
-Verification: True
-TURN 6
-Pirate give hint: This area contains the treasure: From row 0 to row 31, from column 4 to column 31
-Add hint to hint list
-
-ACTION: VERIFICATION
-HINT: The treasure is somewhere in an area bounded by 2-3 tiles from sea
-Verification: False
-
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=20 y=19
-Conduct small scan
+ACTION: SCAN_LARGE
+Conduct large scan
 Found nothing
 TURN 7
-Pirate give hint: The treasure is in a region that has mountain.
+Pirate give hint: A half top of the map does not have treasure
 Add hint to hint list
 
 ACTION: MOVE_LARGE
-Agent moves straight large steps into x=23 y=17
+Agent moves straight large steps into x=22 y=22
 
 ACTION: SCAN_LARGE
 Conduct large scan
@@ -90,203 +87,28 @@ Pirate give hint: The treasure is in a region that has mountain.
 Add hint to hint list
 
 ACTION: MOVE_LARGE
-Agent moves straight large steps into x=22 y=14
+Agent moves straight large steps into x=25 y=24
 
-ACTION: VERIFICATION
-HINT: the treasure is somewhere inside the gap between 2 squares:
-	The bigger square bounded by row 6 on top; row 11 at the bottom; column 15 on the left and column 20 on the right
-	The smaller square bounded by row 9 on top; row 10 at the bottom; column 16 on the left and column 17 on the right
-	
-Verification: False
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
 TURN 9
-Pirate give hint: From the prison where the pirate's staying, the treasure is in the North West direction
+Pirate give hint: A half top of the map does not have treasure
 Add hint to hint list
 
 ACTION: MOVE_LARGE
-Agent moves straight large steps into x=24 y=17
+Agent moves straight large steps into x=22 y=22
 
 ACTION: SCAN_LARGE
 Conduct large scan
 Found nothing
 TURN 10
-Pirate give hint: The treasure is in a region that has mountain.
+Pirate give hint: The treasure is somewhere in an area bounded by 2-3 tiles from sea
 Add hint to hint list
 
 ACTION: MOVE_LARGE
-Agent moves straight large steps into x=21 y=16
-
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=23 y=15
-Conduct small scan
-Found nothing
-TURN 11
-Pirate give hint: From the prison where the pirate's staying, the treasure is in the North direction
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=22 y=18
-
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=23 y=16
-Conduct small scan
-Found nothing
-TURN 12
-Pirate give hint: This area does not contain the treasure: From row 2 to row 10, from column 1 to column 9
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=21 y=13
-
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=23 y=14
-Conduct small scan
-Found nothing
-TURN 13
-Pirate give hint: A half top of the map does not have treasure
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=21 y=17
+Agent moves straight large steps into x=19 y=21
 
 ACTION: SCAN_LARGE
 Conduct large scan
-Found nothing
-TURN 14
-Pirate give hint: From the prison where the pirate's staying, the treasure is in the North East direction
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=24 y=15
-
-ACTION: VERIFICATION
-HINT: This area contains the treasure: From row 0 to row 31, from column 4 to column 31
-Verification: True
-TURN 15
-Pirate give hint: These tile(s) do not contain the treasure: (2, 17), (30, 9), (3, 16), (5, 30), (18, 4), (19, 20), (10, 5), (9, 14), (9, 18), (11, 17)
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=22 y=18
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-TURN 16
-Pirate has been released
-Pirate give hint: Treasure is in one of these region(s): 3, 4, 2
-Add hint to hint list
-Agent teleports to x=11 y=10
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=14 y=11
-
-ACTION: VERIFICATION
-HINT: The treasure is in a region that has mountain.
-Verification: False
-TURN 17
-Pirate give hint: the treasure is somewhere inside the gap between 2 squares:
-	The bigger square bounded by row 7 on top; row 10 at the bottom; column 20 on the left and column 23 on the right
-	The smaller square bounded by row 8 on top; row 8 at the bottom; column 22 on the left and column 22 on the right
-	
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=17 y=13
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-TURN 18
-Pirate give hint: The treasure is somewhere in a boundary of 2 regions
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=20 y=15
-
-ACTION: VERIFICATION
-HINT: The treasure is in a region that has mountain.
-Verification: False
-TURN 19
-Pirate give hint: Row 3 contains the treasure
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=23 y=16
-
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=25 y=17
-Conduct small scan
-Found nothing
-TURN 20
-Pirate give hint: Treasure is somewhere in these two regions' boudaries: Region 3 and region 5
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=28 y=19
-
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=30 y=20
-Conduct small scan
-Found nothing
-TURN 21
-Pirate give hint: Row 6 contains the treasure
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=31 y=21
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-TURN 22
-Pirate give hint: Column 7 contains the treasure
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=31 y=23
-
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=31 y=24
-Conduct small scan
-Found nothing
-TURN 23
-Pirate give hint: Treasure is somewhere in these two regions' boudaries: Region 3 and region 5
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=31 y=25
-
-ACTION: VERIFICATION
-HINT: From the prison where the pirate's staying, the treasure is in the North West direction
-Verification: False
-TURN 24
-Pirate give hint: These region(s) do not contain the treasure: 4, 0
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=31 y=27
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-TURN 25
-Pirate give hint: This area contains the treasure: From row 13 to row 31, from column 0 to column 24
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=31 y=31
-
-ACTION: MOVE_SCAN_SMALL
-Agent moves straight small steps into x=31 y=31
-Conduct small scan
-Found nothing
-TURN 26
-Pirate give hint: Treasure is somewhere in these two regions' boudaries: Region 3 and region 5
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent moves straight large steps into x=31 y=31
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Pirate found the treasure.
+Found Treasure at x=18 y=20

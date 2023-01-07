@@ -950,6 +950,7 @@ def verification
 ```
 
 ### Visualization 
+use termcolor library
 
 ### Test cases
 

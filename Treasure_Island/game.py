@@ -3,6 +3,7 @@ from processing_hint import *
 from hint import *
 from config import *
 from map import *
+import sys
 import os 
 
 class Game():
@@ -180,7 +181,7 @@ class Game():
             step=random.randint(4,5)
         elif choice=='small':
             step=3
-            
+
         #Decide direction based on not scan
         direction=''
         direction_count={'N':0,'E':0,'W':0,'S':0}
@@ -320,21 +321,25 @@ class Game():
             print(log)
         print('GAME RESULT:',self.result)
 
-    def export(self):
+    def export(self,output):
         outfile=f'LOG{self.testcase}.txt'
-        with open ('Treasure_Island/output/'+outfile,'w+') as f:
+        with open (output+outfile,'w+') as f:
             f.write(str(len(self.log.split('\n')))+'\n')
             f.write(self.result.upper()+'\n')
             f.write(self.log)
 
-        
+def main(input,output):   
+    for filename in os.listdir(input):
+        if filename[-4:]!='.txt': continue
+        t=Game()
+        t.input(input+filename)
+        t.play()
+        if not t.result is None:
+            t.export(output)
 
 if __name__=='__main__':
-    cwd = os.getcwd()  # Get the current working directory (cwd)
-    files = os.listdir(cwd)  # Get all the files in that directory
-    print("Files in %r: %s" % (cwd, files))      
-    t=Game()
-    t.input('Treasure_Island/input/MAP32.txt')
-    t.play()
-    if not t.result is None:
-        t.export()
+
+    if (len(sys.argv) != 3):
+        print('usage:\t python game.py <input_dir> <output_dir>')
+        sys.exit(0)
+    main(sys.argv[1],sys.argv[2])
