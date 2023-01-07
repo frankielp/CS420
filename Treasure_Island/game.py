@@ -21,7 +21,7 @@ class Game():
         self.small_scan=3
         self.large_scan=5
         self.log=''
-        self.view=False
+        self.view=True
 
     def input(self,filename):
         self.testcase=int(filename[-6:-4])
