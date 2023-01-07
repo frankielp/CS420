@@ -107,7 +107,7 @@ class Map():
                 veri_flag=True
                 for i in range(h):
                     for j in range(w):
-                        if isinstance(self.board[i][j],str) and self.board[i][j][0]=='X': continue
+                        if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: continue
                         region=int(str(self.board[i][j])[:1])
                         if region not in hint[1:]:
                             mask.add((i,j))
@@ -115,7 +115,7 @@ class Map():
                 veri_flag=False
                 for i in range(h):
                     for j in range(w):
-                        if isinstance(self.board[i][j],str) and self.board[i][j][0]=='X': continue
+                        if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: continue
                         region=int(str(self.board[i][j])[:1])
                         if region in hint[1:]:
                             mask.add((i,j))
@@ -125,7 +125,7 @@ class Map():
                 veri_flag=True
                 for i in range(h):
                     for j in range(w):
-                        if isinstance(self.board[i][j],str) and self.board[i][j][0]=='X': continue
+                        if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: continue
                         region=int(str(self.board[i][j])[:1])
                         if region in hint[1:]:
                             mask.add((i,j))
@@ -133,7 +133,7 @@ class Map():
                 veri_flag=False
                 for i in range(h):
                     for j in range(w):
-                        if isinstance(self.board[i][j],str) and self.board[i][j][0]=='X': continue
+                        if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: continue
                         region=int(str(self.board[i][j])[:1])
                         if region not in hint[1:]:
                             mask.add((i,j))
@@ -248,7 +248,7 @@ class Map():
             Hint 9: [8, x, y]: 2 regions that the treasure is somewhere in their boundary
             '''
             def is_boundary_2(i,j,region1,region2):
-                if isinstance(self.board[i][j],str) and self.board[i][j][0]=='X': return False
+                if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: return False
                 region=int(str(self.board[i][j])[:1])
                 if region!=region1 or region!=region2: return False
                 x=[-1,0,1,0]
@@ -278,7 +278,7 @@ class Map():
             Hint 10: [9]: The treasure is somewhere in a boundary of 2 regions.
             '''
             def is_boundary(i,j):
-                if isinstance(self.board[i][j],str) and self.board[i][j][0]=='X': return False
+                if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: return False
                 region=int(str(self.board[i][j])[:1])
                 if region==0: return False
                 x=[-1,0,1,0]
@@ -307,7 +307,7 @@ class Map():
             Hint 11: [10, 2/3]: The treasure is somewhere in an area bounded by 2-3 tiles from sea.
             '''
             def bounded_ocean(i,j,dist):
-                if isinstance(self.board[i][j],str) and self.board[i][j][0]=='X': return False
+                if isinstance(self.board[i][j],str) and MASKED in self.board[i][j]: return False
                 region=int(str(self.board[i][j])[:1])
                 if region==0: return False
                 x=[-1,0,1,0]
