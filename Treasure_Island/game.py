@@ -227,7 +227,7 @@ class Game():
         while True:
             step=1
             try:
-                if (isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay] or str(OCEAN) in self.map.board[ax][ay])) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
+                if (isinstance(self.map.board[ax][ay],str) and MOUNTAIN in self.map.board[ax][ay] ) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
                     if direction=='N':
                         ax-=step
                     elif direction=='S':
@@ -277,7 +277,7 @@ class Game():
         while True:
             step=1
             try:
-                if (isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay] or str(OCEAN) in self.map.board[ax][ay])) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
+                if (isinstance(self.map.board[ax][ay],str) and MOUNTAIN in self.map.board[ax][ay] ) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
                     if direction[0]=='N':
                         ax-=step
                     elif direction[0]=='S':
