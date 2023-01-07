@@ -24,7 +24,7 @@ class Game():
         self.visualize=False
 
     def input(self,filename,visualize_flag):
-        self.testcase=int(filename[-6:-4])
+        self.testcase=filename[-6:-4]
         self.map.input(filename)
         with open(filename) as f:
             f.readline()
