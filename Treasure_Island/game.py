@@ -38,7 +38,7 @@ class Game():
             choice = np.random.choice(a=np.arange(1, 16, 1, dtype=int), p = (0.07, 0.07, 0.07, 0.07, 0.07, 0, (1-0.07*12)/3+0.07, 0.07, 0.07, 0.07, 0.07, (1-0.07*12)/3+0.07, 0, (1-0.07*12)/3, 0.07))
         
         # debug
-        choice=4
+        # choice=4
 
         hint,log=generateHint(choice,self.map.board,self.map.region)
         self.hint.append([hint,log])
@@ -177,9 +177,9 @@ class Game():
         ax,ay=self.map.agent_pos
         self.map.board[ax][ay]=str(self.map.board[ax][ay]).replace(AGENT,'')
         if choice=='large':
-            step=random.randint(3,4)
+            step=random.randint(5,6)
         elif choice=='small':
-            step=random.randint(1,2)
+            step=random.randint(3,4)
         if self.pirate:
             direction=pi_direction
         else:
@@ -187,18 +187,19 @@ class Game():
             direction_count={'N':0,'E':0,'W':0,'S':0}
             for i in range(self.map.h):
                 for j in range(self.map.w):
-                    if self.map.board[i][j]!=OCEAN and (self.map.board[i][j]!=MASKED or self.map.board[i][j]!=MASKED+AGENT):
+                    if self.map.board[i][j]!=OCEAN and self.map.board[i][j]!=MASKED and self.map.board[i][j]!=MASKED+AGENT:
                         if i<ax: direction_count['N']+=1
                         elif i>ax: direction_count['S']+=1
                         if j<ay: direction_count['W']+=1
                         elif i>ay: direction_count['E']+=1
-            direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True)
+            print(direction_count)
+            direction_count=sorted(direction_count.keys(),key= lambda x:direction_count[x],reverse=True)    
             direction+=str(direction_count[0])+str(direction_count[1])
         for i in range(len(direction)):
             if i==len(direction)-1:
                 tmp_step=step
             else:
-                tmp_step=step//2
+                tmp_step=step//2+1
             if direction[i]=='N':
                 ax-=tmp_step
             elif direction[i]=='S':
