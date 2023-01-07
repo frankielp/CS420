@@ -117,7 +117,6 @@ class Game():
                 if i==tx and j==ty:
                     self.map.board[i][j]=str(self.map.board[i][j])+MASKED
                     self.result='WIN'
-                    log+=f'Found Treasure at x={i} y={j}\n'
                     continue
                 try:
                     self.map.board[i][j]=int(self.map.board[i][j])
@@ -328,8 +327,8 @@ class Game():
         log+=f'The pirate’s prison is going to reveal the at the beginning of {self.reveal_prison_turn} turn\n'
         log+=f'The pirate is free at the beginning of the {self.release_turn}th turn\n'
         self.log+='START GAME\n'+log
+        print('--------------------------------------')
         print('START GAME\n'+log,end='')
-        print(self.visualize)
         if self.visualize:
             self.map.visualize()
         while self.result is None:
@@ -380,8 +379,13 @@ class Game():
                 print()
                 print('LOG\n'+log)
                 input('Press Enter to continue')
+        tx,ty=self.map.treasure_pos
         if self.result=='LOSE':
-            log='Pirate found the treasure.\n'
+            log=f'Pirate found the treasure at x={tx} y={ty}.\n'
+            self.log+=log
+            print(log)
+        elif self.result=='WIN':
+            log=f'Agent found treasure at x={tx} y={ty}.\n'
             self.log+=log
             print(log)
         self.log+='GAME RESULT:'+str(self.result)

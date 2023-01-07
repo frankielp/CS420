@@ -191,7 +191,7 @@ def generateHint9(map: list):
               # print(region1, region2)
               if (region2!=0 and region2!=region1):
                 boundary.add((min(region1, region2),max(region1,region2)))
-    print(boundary)
+    # print(boundary)
     chosenBoundary = random.choice(list(boundary))
     
     # print(chosenBoundary)

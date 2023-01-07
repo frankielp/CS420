@@ -1,125 +1,51 @@
-123
+49
 WIN
 START GAME
-Agent is allocated at (55,4)
+Agent is allocated at (22,23)
 The pirate’s prison is going to reveal the at the beginning of 3 turn
 The pirate is free at the beginning of the 46th turn
 
 TURN 1
 First hint is always true
-HINT: These tile(s) do not contain the treasure: (28, 70), (81, 50), (70, 70), (2, 73), (59, 22), (69, 62), (64, 51), (54, 73), (46, 46), (84, 76)
+HINT: This area does not contain the treasure: From row 66 to row 88, from column 68 to column 89
 Verification: True
 
-ACTION: MOVE_LARGE
-Agent move 4 steps in direction E
-Agent moves straight large steps into x=55 y=8
-
 ACTION: MOVE_SCAN_SMALL
-Agent move 3 steps in direction N
-Agent moves straight small steps into x=52 y=8
+Agent move 3 steps in direction S
+Agent moves straight small steps into x=25 y=23
 Conduct small scan
+Found nothing
+
+ACTION: SCAN_LARGE
+Conduct large scan
 Found nothing
 
 TURN 2
-Pirate give hint: Treasure is somewhere in these two regions' boudaries: Region 1 and region 5
+Pirate give hint: The treasure is somewhere in an area bounded by 2-3 tiles from sea
 Add hint to hint list
 
 ACTION: MOVE_LARGE
-Agent move 4 steps in direction E
-Agent moves straight large steps into x=52 y=12
-
-ACTION: VERIFICATION
-HINT: Treasure is somewhere in these two regions' boudaries: Region 1 and region 5
-Verification: False
-
-TURN 3
-The prison of pirate locate at x=21,y=18
-Pirate give hint: Treasure is in one of these region(s): 7, 3
-Add hint to hint list
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-
-ACTION: VERIFICATION
-HINT: Treasure is in one of these region(s): 7, 3
-Verification: False
-
-TURN 4
-Pirate give hint: The treasure is in a region that has mountain.
-Add hint to hint list
+Agent move 5 steps in direction S
+Agent moves straight large steps into x=30 y=23
 
 ACTION: MOVE_SCAN_SMALL
 Agent move 3 steps in direction E
-Agent moves straight small steps into x=52 y=15
+Agent moves straight small steps into x=30 y=26
 Conduct small scan
 Found nothing
 
-ACTION: VERIFICATION
-HINT: The treasure is in a region that has mountain.
-Verification: False
-
-TURN 5
-Pirate give hint: The treasure is in a region that has mountain.
+TURN 3
+The prison of pirate locate at x=21,y=18
+Pirate give hint: A half right of the map does not have treasure
 Add hint to hint list
 
 ACTION: MOVE_LARGE
-Agent move 5 steps in direction E
-Agent moves straight large steps into x=52 y=20
-
-ACTION: VERIFICATION
-HINT: The treasure is in a region that has mountain.
-Verification: False
-
-TURN 6
-Pirate give hint: These tile(s) do not contain the treasure: (18, 8), (40, 77), (49, 44), (63, 66), (50, 24), (66, 75)
-Add hint to hint list
+Agent move 5 steps in direction S
+Agent moves straight large steps into x=35 y=26
 
 ACTION: MOVE_SCAN_SMALL
-Agent move 3 steps in direction N
-Agent moves straight small steps into x=49 y=20
+Agent move 3 steps in direction S
+Agent moves straight small steps into x=38 y=26
 Conduct small scan
-Found nothing
-
-ACTION: MOVE_LARGE
-Agent move 4 steps in direction E
-Agent moves straight large steps into x=49 y=24
-
-TURN 7
-Pirate give hint: This area does not contain the treasure: From row 39 to row 67, from column 38 to column 66
-Add hint to hint list
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-
-ACTION: VERIFICATION
-HINT: These tile(s) do not contain the treasure: (18, 8), (40, 77), (49, 44), (63, 66), (50, 24), (66, 75)
-Verification: True
-
-TURN 8
-Pirate give hint: This area does not contain the treasure: From row 59 to row 83, from column 0 to column 23
-Add hint to hint list
-
-ACTION: MOVE_LARGE
-Agent move 4 steps in direction N
-Agent moves straight large steps into x=45 y=24
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found nothing
-
-TURN 9
-Pirate give hint: This area contains the treasure: From row 0 to row 89, from column 34 to column 89
-Add hint to hint list
-
-ACTION: MOVE_SCAN_SMALL
-Agent move 3 steps in direction N
-Agent moves straight small steps into x=42 y=24
-Conduct small scan
-Found nothing
-
-ACTION: SCAN_LARGE
-Conduct large scan
-Found Treasure at x=38 y=24
+Agent found treasure at x=38 y=24.
 GAME RESULT:WIN
