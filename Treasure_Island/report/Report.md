@@ -971,8 +971,12 @@ We generate 5 maps for test cases:
 - 16 x 16
 - 32 x 32
 - 64 x 64
+- 80 x 80
+- 90 x 90
 
 Action LOG for each test case is recorded in the corresponding text file stored in `output` folder. 
+
+The game run successfully in all 5 test cases.
 
 ### Evaluation
 
