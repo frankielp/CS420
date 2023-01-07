@@ -119,14 +119,14 @@ class Game():
                     log+=f'Found Treasure at x={i} y={j}\n'
                     continue
                 try:
-                    self.map.board[x][y]=int(self.map.board[x][y])
+                    self.map.board[i][j]=int(self.map.board[i][j])
                 except:
                     pass
-                if isinstance(self.map.board[x][y],str): 
-                    if MASKED in self.map.board[x][y]: continue
-                    self.map.board[x][y]=MASKED+self.map.board[x][y][-1]
+                if isinstance(self.map.board[i][j],str): 
+                    if MASKED in self.map.board[i][j]: continue
+                    self.map.board[i][j]=MASKED+self.map.board[i][j][-1]
                 else:
-                    self.map.board[x][y]=MASKED
+                    self.map.board[i][j]=MASKED
 
         if self.result is None:
             log+='Found nothing\n'
