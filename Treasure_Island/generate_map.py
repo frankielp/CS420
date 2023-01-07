@@ -172,6 +172,7 @@ class MapGenerator:
                         f.write('{:>2};'.format(self.map[i][j]))
 
 if __name__=='__main__':
+    print('__MAP GENERATOR__')
     size=int(input('Size of map: '))
     region=int(input('Number of region: '))
     prison=int(input('Number of prison: '))
