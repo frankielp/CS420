@@ -218,6 +218,9 @@ class Game():
             ay-=step
         num_step=step
         # mountain
+        # reset
+        tx,ty=ax,ay
+        tstep=step
         while True:
             step=1
             try:
@@ -234,15 +237,16 @@ class Game():
                 else:
                     break
             except:
+                ax,ay=tx,ty
                 if direction=='N':
-                    direction=='S'
+                    direction='S'
                 elif direction=='S':
-                    direction=='N'
+                    direction='N'
                 elif direction=='E':
-                    direction=='W'
+                    direction='W'
                 elif direction=='W':
-                    direction=='E'
-                num_step+=1
+                    direction='E'
+                num_step=tstep
                     
         # Correction
         ax=min(max(0,ax),self.map.w-1)
@@ -271,20 +275,32 @@ class Game():
             elif direction[i]=='W':
                 ay-=tmp_step
             step-=tmp_step
-        
+        # reset
+        tx,ty=ax,ay
         while True:
             step=1
-            if (isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay] or str(OCEAN) in self.map.board[ax][ay])) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
-                if direction[0]=='N':
-                    ax-=step
-                elif direction[0]=='S':
-                    ax+=step
-                elif direction[0]=='E':
-                    ay+=step
-                elif direction[0]=='W':
-                    ay-=step
-            else:
-                break
+            try:
+                if (isinstance(self.map.board[ax][ay],str) and (MOUNTAIN in self.map.board[ax][ay] or PRISON in self.map.board[ax][ay] or str(OCEAN) in self.map.board[ax][ay])) or (isinstance(self.map.board[ax][ay],int) and  self.map.board[ax][ay]==OCEAN):
+                    if direction[0]=='N':
+                        ax-=step
+                    elif direction[0]=='S':
+                        ax+=step
+                    elif direction[0]=='E':
+                        ay+=step
+                    elif direction[0]=='W':
+                        ay-=step
+                else:
+                    break
+            except:
+                ax,ay=tx,ty
+                if direction=='N':
+                    direction='S'
+                elif direction=='S':
+                    direction='N'
+                elif direction=='E':
+                    direction='W'
+                elif direction=='W':
+                    direction='E'
                     
         # Correction
         ax=min(max(0,ax),self.map.w-1)

@@ -1,0 +1,163 @@
+161
+WIN
+START GAME
+Agent is allocated at (15,7)
+The pirate’s prison is going to reveal the at the beginning of 3 turn
+The pirate is free at the beginning of the 17th turn
+
+TURN 1
+First hint is always true
+HINT: Row 27 does not contain the treasure
+Verification: True
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps in direction E
+Agent moves straight small steps into x=15 y=10
+Conduct small scan
+Found nothing
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+TURN 2
+Pirate give hint: the treasure is somewhere inside the gap between 2 squares:
+	The bigger square bounded by row 3 on top; row 6 at the bottom; column 28 on the left and column 31 on the right
+	The smaller square bounded by row 5 on top; row 5 at the bottom; column 29 on the left and column 29 on the right
+	
+Add hint to hint list
+
+ACTION: MOVE_LARGE
+Agent move 4 steps in direction S
+Agent moves straight large steps into x=19 y=10
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+TURN 3
+The prison of pirate locate at x=16,y=22
+Pirate give hint: A half bottom of the map does not have treasure
+Add hint to hint list
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps in direction N
+Agent moves straight small steps into x=16 y=10
+Conduct small scan
+Found nothing
+
+ACTION: VERIFICATION
+HINT: the treasure is somewhere inside the gap between 2 squares:
+	The bigger square bounded by row 3 on top; row 6 at the bottom; column 28 on the left and column 31 on the right
+	The smaller square bounded by row 5 on top; row 5 at the bottom; column 29 on the left and column 29 on the right
+	
+Verification: False
+
+TURN 4
+Pirate give hint: From the prison where the pirate's staying, the treasure is in the South direction
+Add hint to hint list
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps in direction N
+Agent moves straight small steps into x=13 y=10
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent move 5 steps in direction S
+Agent moves straight large steps into x=18 y=10
+
+TURN 5
+Pirate give hint: You are the nearest person to the treasure (between you and the prison the pirate is staying)
+Add hint to hint list
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps in direction N
+Agent moves straight small steps into x=15 y=10
+Conduct small scan
+Found nothing
+
+ACTION: MOVE_LARGE
+Agent move 5 steps in direction N
+Agent moves straight large steps into x=10 y=10
+
+TURN 6
+Pirate give hint: The treasure is in a region that has mountain.
+Add hint to hint list
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+ACTION: VERIFICATION
+HINT: A half bottom of the map does not have treasure
+Verification: False
+
+TURN 7
+Pirate give hint: The treasure is in a region that has mountain.
+Add hint to hint list
+
+ACTION: MOVE_LARGE
+Agent move 4 steps in direction S
+Agent moves straight large steps into x=14 y=10
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps in direction S
+Agent moves straight small steps into x=17 y=10
+Conduct small scan
+Found nothing
+
+TURN 8
+Pirate give hint: Row 13 does not contain the treasure
+Add hint to hint list
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps in direction E
+Agent moves straight small steps into x=17 y=13
+Conduct small scan
+Found nothing
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found nothing
+
+TURN 9
+Pirate give hint: Row 18 does not contain the treasure
+Add hint to hint list
+
+ACTION: MOVE_LARGE
+Agent move 4 steps in direction S
+Agent moves straight large steps into x=21 y=13
+
+ACTION: VERIFICATION
+HINT: From the prison where the pirate's staying, the treasure is in the South direction
+Verification: False
+
+TURN 10
+Pirate give hint: You are the nearest person to the treasure (between you and the prison the pirate is staying)
+Add hint to hint list
+
+ACTION: VERIFICATION
+HINT: You are the nearest person to the treasure (between you and the prison the pirate is staying)
+Verification: True
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps in direction W
+Agent moves straight small steps into x=21 y=10
+Conduct small scan
+Found nothing
+
+TURN 11
+Pirate give hint: The treasure is in a region that has mountain.
+Add hint to hint list
+
+ACTION: MOVE_SCAN_SMALL
+Agent move 3 steps in direction W
+Agent moves straight small steps into x=21 y=7
+Conduct small scan
+Found nothing
+
+ACTION: SCAN_LARGE
+Conduct large scan
+Found Treasure at x=23 y=6
+GAME RESULT:WIN
