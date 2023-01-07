@@ -21,9 +21,9 @@ class Game():
         self.small_scan=3
         self.large_scan=5
         self.log=''
-        self.view=True
+        self.view=False
 
-    def input(self,filename):
+    def input(self,filename,visualize_flag):
         self.testcase=int(filename[-6:-4])
         self.map.input(filename)
         with open(filename) as f:
@@ -32,6 +32,7 @@ class Game():
             self.release_turn=int(f.readline().replace('\n',''))
         self.small_scan=max(3,self.map.w//20)
         self.large_scan=max(5,self.map.w//10)
+        self.view=visualize_flag
     def get_hint(self):
         # p = 0.045 for hints that are rare
         # hint 6 and hint 13 prison shouldnt be <reveal and >=release
@@ -310,12 +311,14 @@ class Game():
         log+=f'The pirate is free at the beginning of the {self.release_turn}th turn\n'
         self.log+='START GAME\n'+log
         print('START GAME\n'+log,end='')
-        self.map.visualize()
+        if self.view:
+            self.map.visualize()
         while self.result is None:
             self.turn+=1
             log=f'\nTURN {self.turn}\n'
-            print('--------------------------------------')
-            print(f'TURN {self.turn}')
+            if self.view:
+                print('--------------------------------------')
+                print(f'TURN {self.turn}')
 
             # Reveal prison
             if self.turn==self.reveal_prison_turn:
@@ -351,16 +354,17 @@ class Game():
             # Visualization
             self.map.visualize()
 
-            # Print Log
-            print()
-            print('LOG\n'+log)
             self.log+=log
+            # Print Log
             if self.view:
+                print()
+                print('LOG\n'+log)
                 input('Press Enter to continue')
         if self.result=='LOSE':
             log='Pirate found the treasure.\n'
             self.log+=log
             print(log)
+        self.log+='GAME RESULT:'+str(self.result)
         print('GAME RESULT:',self.result)
 
     def export(self,output):
@@ -370,11 +374,11 @@ class Game():
             f.write(self.result.upper()+'\n')
             f.write(self.log)
 
-def main(input,output):   
+def main(input,output,visualize_flag):   
     for filename in os.listdir(input):
         if filename[-4:]!='.txt': continue
         t=Game()
-        t.input(input+filename)
+        t.input(input+filename,visualize_flag)
         t.play()
         if not t.result is None:
             t.export(output)
@@ -382,6 +386,6 @@ def main(input,output):
 if __name__=='__main__':
 
     if (len(sys.argv) != 3):
-        print('usage:\t python game.py <input_dir> <output_dir>')
+        print('usage:\t python game.py <input_dir> <output_dir> <visualize option>')
         sys.exit(0)
-    main(sys.argv[1],sys.argv[2])
+    main(sys.argv[1],sys.argv[2],sys.argv[3])
