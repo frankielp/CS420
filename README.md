@@ -1,1 +1,1 @@
-# CS420_Artificial-Intelligence
+# CS420 - Artificial Intelligence
